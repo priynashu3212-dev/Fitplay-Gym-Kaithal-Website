@@ -17,6 +17,7 @@ import {
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { ChatBot } from '@/components/chatbot';
 import NotFound from '@/pages/not-found';
 import { Link, Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
 
@@ -176,6 +177,7 @@ function SiteLayout({ children }: { children: ReactNode }) {
       {children}
       <Footer />
       <BookingModal open={modalOpen} onClose={() => setModalOpen(false)} />
+      <ChatBot />
     </div>
   );
 }
@@ -187,12 +189,9 @@ function IntroOverlay({ onFinish }: { onFinish: () => void }) {
       <div className="intro-glow intro-glow-b" aria-hidden="true" />
       <div className="intro-grid-lines" aria-hidden="true" />
       <div className="video-intro-content">
-        <div className="intro-brand" aria-label="Fitplay">
-          <img src={`${base}images/gym-symbol.jpg`} alt="Fitplay Gym" className="h-24 md:h-36 w-auto object-contain" />
-        </div>
-        <p className="eyebrow intro-tagline">Kaithal's training ground / Est. 2017</p>
+        <h1 className="intro-title">FITPLAY GYM</h1>
         <div className="intro-progress" aria-hidden="true"><span /></div>
-        <button className="intro-enter" onClick={onFinish}><Play size={13} fill="currentColor" /> Enter Fitplay</button>
+        <button className="intro-enter" onClick={onFinish}>ENTER SITE</button>
       </div>
     </div>
   );
@@ -289,7 +288,7 @@ function Home() {
           {heroPhase === 'video' && (
           <video ref={heroVideoRef} className="hero-video" autoPlay muted loop={false} playsInline aria-hidden="true" onEnded={() => setHeroPhase('photo')}><source src={`${base}assets/hero-video.mp4`} type="video/mp4" /></video>
           )}
-          {heroPhase === 'photo' && <img className="hero-photo" src={`${base}images/cht.png`} alt="Fitplay Gym" aria-hidden="true" />}
+          {heroPhase === 'photo' && <img className="hero-photo" src={`${base}images/girl.png`} alt="Fitplay Gym" aria-hidden="true" />}
           <button className="hero-sound" onClick={toggleHeroSound} aria-label={heroSound ? 'Mute song' : 'Play song'} data-testid="button-hero-sound">{heroSound ? <VolumeX size={18} /> : <Volume2 size={18} />}<span>Song {heroSound ? 'on' : 'off'}</span></button>
           <div className="container-wide hero-content">
             <p className="eyebrow reveal" style={{ color: 'var(--acid)' }}>Kaithal's training ground / Est. 2017</p>
@@ -384,7 +383,7 @@ function AboutPage() {
     <SiteLayout>
       <main>
         <PageHero eyebrow="01 / The gym" title="Built for" accent="everyday athletes." copy="Fitplay is Kaithal's training ground for people who want to feel stronger, move better and keep showing up." />
-        <section className="section" style={{ backgroundImage: `url(${base}images/about-bg.jpg)`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', position: 'relative' }}>
+        <section className="section" style={{ backgroundImage: `url(${base}images/new.png)`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', position: 'relative' }}>
           <div style={{ position: 'absolute', inset: 0, background: 'rgba(17,24,39,0.75)' }} aria-hidden="true" />
           <div className="container-wide" style={{ position: 'relative', zIndex: 1 }}>
             <div className="intro-grid">
@@ -477,7 +476,8 @@ function ContactPage() {
     <SiteLayout>
       <main>
         <PageHero eyebrow="04 / Contact" title="Make the" accent="first move." copy="Come in for a look, ask us anything and get a feel for the floor. Your first step does not need to be perfect. It just needs to happen." />
-        <section className="section"><div className="container-wide"><div className="contact-grid"><div className="reveal"><p className="eyebrow mb-5 text-[var(--ember)]">Find the floor</p><h2 className="display section-title">See you<br /><span className="text-[var(--ember)]">at Fitplay.</span></h2><p className="body-copy mt-8">Near City Centre,<br />Kaithal, Haryana</p><a href="https://maps.google.com/?q=Fitplay+Gym+Kaithal" target="_blank" rel="noreferrer" className="button-dark mt-8">Open in Maps <MapPin size={16} /></a></div><div className="contact-details reveal delay-1"><div><p className="footer-label text-[var(--ember)]">Call</p><a className="contact-link" href="tel:+919876543210">+91 98765 43210</a></div><div><p className="footer-label text-[var(--ember)]">Hours</p><p className="contact-copy">Monday — Saturday<br />6:00 AM — 10:00 PM<br /><br />Sunday<br />7:00 AM — 1:00 PM</p></div><div><p className="footer-label text-[var(--ember)]">Social</p><a className="contact-link" href="https://www.instagram.com/fitplaykaithal" target="_blank" rel="noreferrer">@fitplaykaithal <Instagram size={18} /></a></div></div></div></div></section>
+        <section className="section"><div className="container-wide"><div className="contact-grid"><div className="reveal"><p className="eyebrow mb-5 text-[var(--ember)]">Find the floor</p><h2 className="display section-title">See you<br /><span className="text-[var(--ember)]">at Fitplay.</span></h2><p className="body-copy mt-8">Near City Centre,<br />Kaithal, Haryana</p><a href="https://maps.google.com/?q=Fitplay+Gym+Kaithal" target="_blank" rel="noreferrer" className="button-dark mt-8">Open in Maps <MapPin size={16} /></a></div><div className="contact-details reveal delay-1"><div><p className="footer-label text-[var(--ember)]">Call</p><a className="contact-link" href="tel:+919876543210">+91 98765 43210</a></div><div><p className="footer-label text-[var(--ember)]">Hours</p><p className="contact-copy">Monday — Saturday<br />6:00 AM — 10:00 PM<br /><br />Sunday<br />7:00 AM — 1:00 PM</p></div><div><p className="footer-label text-[var(--ember)]">Social</p><a className="contact-link" href="https://www.instagram.com/fitplaykaithal" target="_blank" rel="noreferrer">@fitplaykaithal <Instagram size={18} /></a></div></div></div>
+        <a href="https://maps.google.com/?q=Fitplay+Gym+Kaithal" target="_blank" rel="noreferrer" className="contact-map reveal delay-1"><img src={`${base}images/map.png`} alt="Map to Fitplay Gym Kaithal" /></a></div></section>
         <section className="acid-panel cta-panel grain"><div className="container-wide"><p className="eyebrow reveal">Your first rep</p><h2 className="display cta-title mt-8 reveal delay-1">Ready to<br /><span className="text-[var(--ember)]">start?</span></h2><p className="cta-copy reveal delay-2">Book a visit and the crew will help you find the right place to begin.</p></div></section>
       </main>
     </SiteLayout>
