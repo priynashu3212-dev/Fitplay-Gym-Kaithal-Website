@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Image Preview - Select the 9</title>
+<style>
+  body { background: #0a0a0a; color: #fff; font-family: sans-serif; text-align: center; padding: 20px; }
+  h1 { color: #ccff00; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-top: 20px; }
+  .card { border: 2px solid #333; border-radius: 8px; overflow: hidden; background: #141414; }
+  .card img { width: 100%; height: 180px; object-fit: cover; display: block; }
+  .card .num { padding: 8px; font-size: 18px; font-weight: bold; color: #ffa500; }
+  .card small { display: block; padding: 0 8px 8px; color: #888; }
+</style>
+</head>
+<body>
+  <h1>Image Selector - 11 candidates</h1>
+  <p>Tell me which files (numbers) are your 9 gym images, which one is #3 (logo), and which is the last one (About background).</p>
+  <div class="grid">
+    <div class="card"><img src="images/gym-01.jpg" /><div class="num">gym-01</div><small>titan 1.jpg</small></div>
+    <div class="card"><img src="images/gym-02.jpg" /><div class="num">gym-02</div><small>2.jpg</small></div>
+    <div class="card"><img src="images/gym-03.jpg" /><div class="num">gym-03</div><small>3.jpg</small></div>
+    <div class="card"><img src="images/gym-04.jpg" /><div class="num">gym-04</div><small>4.jpg</small></div>
+    <div class="card"><img src="images/gym-05.jpg" /><div class="num">gym-05</div><small>5.jpg</small></div>
+    <div class="card"><img src="images/gym-06.jpg" /><div class="num">gym-06</div><small>6.jpg</small></div>
+    <div class="card"><img src="images/gym-07.jpg" /><div class="num">gym-07</div><small>7.jpg</small></div>
+    <div class="card"><img src="images/gym-08.jpg" /><div class="num">gym-08</div><small>8.jpg</small></div>
+    <div class="card"><img src="images/gym-09.png" /><div class="num">gym-09</div><small>paste PNG 1</small></div>
+    <div class="card"><img src="images/gym-10.png" /><div class="num">gym-10</div><small>paste PNG 2</small></div>
+    <div class="card"><img src="images/gym-11.png" /><div class="num">gym-11</div><small>paste PNG 3</small></div>
+  </div>
+</body>
+</html>
