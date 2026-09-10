@@ -289,7 +289,7 @@ function Home() {
           {heroPhase === 'video' && (
           <video ref={heroVideoRef} className="hero-video" autoPlay muted loop={false} playsInline aria-hidden="true" onEnded={() => setHeroPhase('photo')}><source src={`${base}assets/hero-video.mp4`} type="video/mp4" /></video>
           )}
-          {heroPhase === 'photo' && <img className="hero-photo" src={`${base}images/end-photo.jpg`} alt="Fitplay Gym" aria-hidden="true" />}
+          {heroPhase === 'photo' && <img className="hero-photo" src={`${base}images/cht.png`} alt="Fitplay Gym" aria-hidden="true" />}
           <button className="hero-sound" onClick={toggleHeroSound} aria-label={heroSound ? 'Mute song' : 'Play song'} data-testid="button-hero-sound">{heroSound ? <VolumeX size={18} /> : <Volume2 size={18} />}<span>Song {heroSound ? 'on' : 'off'}</span></button>
           <div className="container-wide hero-content">
             <p className="eyebrow reveal" style={{ color: 'var(--acid)' }}>Kaithal's training ground / Est. 2017</p>
