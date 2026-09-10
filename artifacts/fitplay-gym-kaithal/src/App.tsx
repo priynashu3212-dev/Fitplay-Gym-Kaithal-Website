@@ -21,6 +21,7 @@ import NotFound from '@/pages/not-found';
 import { Link, Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
 
 const queryClient = new QueryClient();
+const base = import.meta.env.BASE_URL;
 
 const navItems = [
   { href: '/', label: 'Home' },
@@ -39,15 +40,15 @@ const trainingOffers = [
 ];
 
 const galleryImages = [
-  { src: '/images/gallery-01.jpg', label: 'Fitplay life', ratio: '335 / 597' },
-  { src: '/images/gallery-02.jpg', label: 'Train hard', ratio: '335 / 597' },
-  { src: '/images/gallery-03.jpg', label: 'Power up', ratio: '335 / 597' },
-  { src: '/images/gallery-04.jpg', label: 'Strong daily', ratio: '335 / 597' },
-  { src: '/images/gym-02.jpg', label: 'The floor', ratio: '515 / 388' },
-  { src: '/images/gym-03.jpg', label: 'Strength zone', ratio: '515 / 388' },
-  { src: '/images/gym-05.jpg', label: 'Every rep counts', ratio: '1 / 1' },
-  { src: '/images/gym-07.jpg', label: 'Fitplay energy', ratio: '515 / 388' },
-  { src: '/images/gym-09.jpg', label: 'The crew', ratio: '1 / 1' },
+  { src: `${base}images/gallery-01.jpg`, label: 'Fitplay life', ratio: '335 / 597' },
+  { src: `${base}images/gallery-02.jpg`, label: 'Train hard', ratio: '335 / 597' },
+  { src: `${base}images/gallery-03.jpg`, label: 'Power up', ratio: '335 / 597' },
+  { src: `${base}images/gallery-04.jpg`, label: 'Strong daily', ratio: '335 / 597' },
+  { src: `${base}images/gym-02.jpg`, label: 'The floor', ratio: '515 / 388' },
+  { src: `${base}images/gym-03.jpg`, label: 'Strength zone', ratio: '515 / 388' },
+  { src: `${base}images/gym-05.jpg`, label: 'Every rep counts', ratio: '1 / 1' },
+  { src: `${base}images/gym-07.jpg`, label: 'Fitplay energy', ratio: '515 / 388' },
+  { src: `${base}images/gym-09.jpg`, label: 'The crew', ratio: '1 / 1' },
 ];
 
 function useReveal() {
@@ -86,7 +87,7 @@ function SiteHeader({ onBookVisit }: { onBookVisit: () => void }) {
   return (
     <header className={`topbar ${scrolled ? 'scrolled' : ''}`} data-testid="header-main">
       <div className="container-wide flex h-[72px] items-center justify-between">
-        <Link href="/" className="brand-mark flex items-center bg-[var(--acid)] px-3 py-2" data-testid="link-brand"><img src="/images/gym-symbol.jpg" alt="Fitplay Gym" className="h-10 w-auto object-contain" /></Link>
+        <Link href="/" className="brand-mark flex items-center bg-[var(--acid)] px-3 py-2" data-testid="link-brand"><img src={`${base}images/gym-symbol.jpg`} alt="Fitplay Gym" className="h-10 w-auto object-contain" /></Link>
         <nav className="nav-desktop flex items-center gap-6" aria-label="Primary navigation">
           {navItems.map((item) => (
             <Link key={item.href} href={item.href} className={`nav-link eyebrow ${location === item.href ? 'active' : ''}`} data-testid={`link-nav-${item.label.toLowerCase().replace(' ', '-')}`}>{item.label}</Link>
@@ -115,7 +116,7 @@ function Footer() {
       <div className="container-wide">
         <div className="footer-grid">
           <div>
-            <div className="footer-logo"><img src="/images/gym-symbol.jpg" alt="Fitplay Gym" className="h-14 w-auto object-contain" /></div>
+            <div className="footer-logo"><img src={`${base}images/gym-symbol.jpg`} alt="Fitplay Gym" className="h-14 w-auto object-contain" /></div>
             <p className="mt-6 max-w-[250px] text-sm leading-6 text-[rgba(245,241,232,.55)]">A stronger everyday, built in Kaithal.</p>
           </div>
           <div>
@@ -187,7 +188,7 @@ function IntroOverlay({ onFinish }: { onFinish: () => void }) {
       <div className="intro-grid-lines" aria-hidden="true" />
       <div className="video-intro-content">
         <div className="intro-brand" aria-label="Fitplay">
-          <img src="/images/gym-symbol.jpg" alt="Fitplay Gym" className="h-24 md:h-36 w-auto object-contain" />
+          <img src={`${base}images/gym-symbol.jpg`} alt="Fitplay Gym" className="h-24 md:h-36 w-auto object-contain" />
         </div>
         <p className="eyebrow intro-tagline">Kaithal's training ground / Est. 2017</p>
         <div className="intro-progress" aria-hidden="true"><span /></div>
@@ -284,11 +285,11 @@ function Home() {
       {introVisible && <IntroOverlay onFinish={finishIntro} />}
       <main id="top">
         <section className={`hero grain ${heroPhase === 'photo' ? 'hero-showing-photo' : ''}`} aria-labelledby="hero-title">
-          <audio ref={heroAudioRef} src="/assets/hero-audio.mp3" loop preload="auto" aria-hidden="true" />
+          <audio ref={heroAudioRef} src={`${base}assets/hero-audio.mp3`} loop preload="auto" aria-hidden="true" />
           {heroPhase === 'video' && (
-          <video ref={heroVideoRef} className="hero-video" autoPlay muted loop={false} playsInline aria-hidden="true" onEnded={() => setHeroPhase('photo')}><source src="/assets/hero-video.mp4" type="video/mp4" /></video>
+          <video ref={heroVideoRef} className="hero-video" autoPlay muted loop={false} playsInline aria-hidden="true" onEnded={() => setHeroPhase('photo')}><source src={`${base}assets/hero-video.mp4`} type="video/mp4" /></video>
           )}
-          {heroPhase === 'photo' && <img className="hero-photo" src="/images/end-photo.jpg" alt="Fitplay Gym" aria-hidden="true" />}
+          {heroPhase === 'photo' && <img className="hero-photo" src={`${base}images/end-photo.jpg`} alt="Fitplay Gym" aria-hidden="true" />}
           <button className="hero-sound" onClick={toggleHeroSound} aria-label={heroSound ? 'Mute song' : 'Play song'} data-testid="button-hero-sound">{heroSound ? <VolumeX size={18} /> : <Volume2 size={18} />}<span>Song {heroSound ? 'on' : 'off'}</span></button>
           <div className="container-wide hero-content">
             <p className="eyebrow reveal" style={{ color: 'var(--acid)' }}>Kaithal's training ground / Est. 2017</p>
@@ -383,7 +384,7 @@ function AboutPage() {
     <SiteLayout>
       <main>
         <PageHero eyebrow="01 / The gym" title="Built for" accent="everyday athletes." copy="Fitplay is Kaithal's training ground for people who want to feel stronger, move better and keep showing up." />
-        <section className="section" style={{ backgroundImage: 'url(/images/about-bg.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', position: 'relative' }}>
+        <section className="section" style={{ backgroundImage: `url(${base}images/about-bg.jpg)`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', position: 'relative' }}>
           <div style={{ position: 'absolute', inset: 0, background: 'rgba(17,24,39,0.75)' }} aria-hidden="true" />
           <div className="container-wide" style={{ position: 'relative', zIndex: 1 }}>
             <div className="intro-grid">
