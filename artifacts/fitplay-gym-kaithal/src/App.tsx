@@ -182,12 +182,28 @@ function SiteLayout({ children }: { children: ReactNode }) {
   );
 }
 
-function IntroOverlay({ onFinish }: { onFinish: () => void }) {
+function IntroOverlay({ onFinish, base }: { onFinish: () => void; base: string }) {
+  const clipRefs = useRef<HTMLVideoElement[]>([]);
+  const clips = ['scene-01','scene-02','scene-03','scene-04','scene-05','scene-06','scene-07','scene-08','scene-09','scene-10'];
+  useEffect(() => {
+    const t = window.setTimeout(() => {
+      clipRefs.current.forEach((v, i) => { if (v) { v.currentTime = 0; v.play().catch(() => {}); } });
+    }, 150);
+    return () => window.clearTimeout(t);
+  }, []);
   return (
     <div className="video-intro" role="dialog" aria-modal="true" aria-label="Fitplay Gym intro">
       <div className="intro-glow intro-glow-a" aria-hidden="true" />
       <div className="intro-glow intro-glow-b" aria-hidden="true" />
       <div className="intro-grid-lines" aria-hidden="true" />
+      <div className="intro-clips" aria-hidden="true">
+        {clips.map((c, i) => (
+          <video key={c} className={`intro-clip intro-clip-${i}`} muted playsInline loop
+            ref={el => { clipRefs.current[i] = el!; }}
+          ><source src={`${base}assets/intro/${c}.mp4`} type="video/mp4" /></video>
+        ))}
+        <div className="intro-ring" aria-hidden="true" />
+      </div>
       <div className="video-intro-content">
         <h1 className="intro-title">FITPLAY GYM</h1>
         <div className="intro-progress" aria-hidden="true"><span /></div>
@@ -216,7 +232,7 @@ function Home() {
 
   useEffect(() => {
     if (!introVisible) return;
-    const timer = window.setTimeout(finishIntro, 5600);
+    const timer = window.setTimeout(finishIntro, 10500);
     return () => window.clearTimeout(timer);
   }, [introVisible]);
 
@@ -281,7 +297,7 @@ function Home() {
 
   return (
     <SiteLayout>
-      {introVisible && <IntroOverlay onFinish={finishIntro} />}
+      {introVisible && <IntroOverlay onFinish={finishIntro} base={base} />}
       <main id="top">
         <section className={`hero grain ${heroPhase === 'photo' ? 'hero-showing-photo' : ''}`} aria-labelledby="hero-title">
           <audio ref={heroAudioRef} src={`${base}assets/hero-audio.mp3`} loop preload="auto" aria-hidden="true" />
