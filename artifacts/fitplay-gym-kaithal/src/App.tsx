@@ -472,12 +472,40 @@ function GalleryPage() {
 
 function ContactPage() {
   useReveal();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [inquirySent, setInquirySent] = useState(false);
+
+  const handleInquiry = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    const subject = encodeURIComponent(`Website Inquiry from ${name}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nQuery:\n${message}`);
+    window.location.href = `mailto:bhanupartap1790@gmail.com?subject=${subject}&body=${body}`;
+    setInquirySent(true);
+    setName(''); setEmail(''); setMessage('');
+  };
+
   return (
     <SiteLayout>
       <main>
         <PageHero eyebrow="04 / Contact" title="Make the" accent="first move." copy="Come in for a look, ask us anything and get a feel for the floor. Your first step does not need to be perfect. It just needs to happen." />
         <section className="section"><div className="container-wide"><div className="contact-grid"><div className="reveal"><p className="eyebrow mb-5 text-[var(--ember)]">Find the floor</p><h2 className="display section-title">See you<br /><span className="text-[var(--ember)]">at Fitplay.</span></h2><p className="body-copy mt-8">Near City Centre,<br />Kaithal, Haryana</p><a href="https://maps.google.com/?q=Fitplay+Gym+Kaithal" target="_blank" rel="noreferrer" className="button-dark mt-8">Open in Maps <MapPin size={16} /></a></div><div className="contact-details reveal delay-1"><div><p className="footer-label text-[var(--ember)]">Call</p><a className="contact-link" href="tel:+919876543210">+91 98765 43210</a></div><div><p className="footer-label text-[var(--ember)]">Hours</p><p className="contact-copy">Monday — Saturday<br />6:00 AM — 10:00 PM<br /><br />Sunday<br />7:00 AM — 1:00 PM</p></div><div><p className="footer-label text-[var(--ember)]">Social</p><a className="contact-link" href="https://www.instagram.com/fitplaykaithal" target="_blank" rel="noreferrer">@fitplaykaithal <Instagram size={18} /></a></div></div></div>
         <a href="https://maps.google.com/?q=Fitplay+Gym+Kaithal" target="_blank" rel="noreferrer" className="contact-map reveal delay-1"><img src={`${base}images/map.png`} alt="Map to Fitplay Gym Kaithal" /></a></div></section>
+        <section className="dark-panel section"><div className="container-wide"><div className="intro-grid"><div className="reveal"><p className="eyebrow mb-5 text-[var(--acid)]">Got a question?</p><h2 className="display section-title">Send an<br /><span className="text-[var(--acid)]">inquiry.</span></h2><p className="mt-5 max-w-[400px] text-sm leading-7 text-[rgba(245,241,232,.6)]">Got a query about the gym, membership or training? Drop your details below and we'll get back to you at your email.</p></div>
+          <form className="inquiry-form reveal delay-1" onSubmit={handleInquiry}>
+            {!inquirySent ? (<>
+              <label className="eyebrow" htmlFor="inquiry-name">Your name</label>
+              <input id="inquiry-name" type="text" required placeholder="What should we call you?" value={name} onChange={(e) => setName(e.target.value)} />
+              <label className="eyebrow" htmlFor="inquiry-email">Your email</label>
+              <input id="inquiry-email" type="email" required placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <label className="eyebrow" htmlFor="inquiry-message">Your query</label>
+              <textarea id="inquiry-message" required placeholder="Tell us what you'd like to know..." value={message} onChange={(e) => setMessage(e.target.value)} />
+              <button type="submit" className="button-primary">Send inquiry <ArrowRight size={16} /></button>
+            </>) : (
+              <div className="inquiry-success"><p className="eyebrow text-[var(--acid)]">Thanks!</p><p className="mt-4 text-sm leading-7 text-[rgba(245,241,232,.6)]">Your email client should open with the query pre-filled. Send it and we'll get back to you soon.</p><button type="button" className="button-dark mt-7" onClick={() => setInquirySent(false)}>Send another</button></div>
+            )}
+          </form></div></div></section>
         <section className="acid-panel cta-panel grain"><div className="container-wide"><p className="eyebrow reveal">Your first rep</p><h2 className="display cta-title mt-8 reveal delay-1">Ready to<br /><span className="text-[var(--ember)]">start?</span></h2><p className="cta-copy reveal delay-2">Book a visit and the crew will help you find the right place to begin.</p></div></section>
       </main>
     </SiteLayout>
