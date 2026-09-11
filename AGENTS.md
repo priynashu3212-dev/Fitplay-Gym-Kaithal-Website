@@ -804,3 +804,34 @@ Start-Process -FilePath "cmd.exe" -ArgumentList "/c C:\Users\Admin\Fitplay-Gym-K
 ### Live
 - Live: https://priynashu3212-dev.github.io/Fitplay-Gym-Kaithal-Website/ (Ctrl+F5, Pages ~2-5 min)
 - Local: http://localhost:5000/
+
+### Session 14 - September 11, 2026 (Thursday)
+
+**User message**: "jo video m starting clip h traditional wale usko thoda 2x krdo"
+
+**Work Done**:
+- Detected first scene boundary at ~12.4s (treadmill/traditional intro clip)
+- Re-encoded hero video from 1080p source: **first 12.4s at 2x (setpts=PTS/2)**, remainder at 1x
+- Output: hero-video.mp4 = 97.3s, 63.2MB, 1080x1920 (under GitHub 100MB limit)
+- Deployed + pushed c43c340
+
+**User message (follow-up)**: "ek kam kro start wale treadmill wali clip ko trim krkr 6 sec krdo" + "treadmill ko last m laga do"
+
+**Work Done**:
+- Re-encoded from 1080p source in ONE clean pass (no double-encode):
+  - [0:v]trim=start=12.4:end=103.5,setpts=PTS-STARTPTS  (treadmill clip removed from start)
+  - [0:v]trim=start=0:end=12.4,setpts=PTS/2 (treadmill 2x = ~6.2s)
+  - concat order: **[rest of video @1x] + [treadmill @2x (6s) at END]**
+- Output: hero-video.mp4 = **97.37s, 88.9MB, 1080x1920** (treadmill now at END)
+- Deployed + pushed 67012a1 "Move treadmill clip (6s, 2x) to END of hero video"
+
+### Tasks Completed (Session 14)
+- ? First clip (treadmill/traditional) sped up 2x
+- ? Trimmed treadmill clip to ~6s
+- ? Moved treadmill clip to the END of the hero video
+- ? Live + local synced, pushed
+- ? AGENTS.md updated
+
+### Live
+- Live: https://priynashu3212-dev.github.io/Fitplay-Gym-Kaithal-Website/ (Ctrl+F5, Pages ~2-5 min)
+- Local: http://localhost:5000/
