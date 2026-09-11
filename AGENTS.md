@@ -771,3 +771,36 @@ Start-Process -FilePath "cmd.exe" -ArgumentList "/c C:\Users\Admin\Fitplay-Gym-K
 - Code structure cleanup: split App.tsx (Home, About, Training, Memberships, Gallery, Contact + shared SiteLayout/Header/Footer/PageHero) into `src/pages/` + `src/components/`
 - Remove unused shadcn `components/ui/*` (most unused) to slim bundle
 - Pending: Gallery 9 titan images / gym logo / Our Story image / 4K conversion (still open from earlier)
+
+---
+
+### Session 13 - September 11, 2026 (Thursday)
+
+**User message**: "" - Replace the home hero video with the newly downloaded one from PC (Downloads/gym_video_clear_1080p.mp4).
+
+**Work Done**:
+1. Located new video: Downloads/gym_video_clear_1080p.mp4 (196MB, 1080x1920 portrait 1080p H.264, 30fps, 180.5s total)
+2. **Problem #1 - over 100MB**: 196MB raw file exceeds GitHub's 100MB file-size limit (would also make GitHub Pages reject). Compressed to a single H.264 stream (CRF 28, yuv420p, faststart, no audio) -> 37.7MB.
+3. **Problem #2 - black tail**: After zoomed hero "crop-middle-only" trick from Session 10 was reverted, the raw footage actually has a LONG black/empty segment at the end. Using ffmpeg lackdetect found black run = **t 104.16s -> 180.53s (~76 seconds)**.
+4. **Fix**: Trimmed video to first **103.5s** (black tail fully removed) and re-encoded 1080p -> final hero-video.mp4 = **41.1MB, 103.5s, 1080x1920** (kept under 100MB GitHub limit).
+5. Filename unchanged (hero-video.mp4) so src/App.tsx needed NO change. Old 720p video backed up at C:\Users\Admin\AppData\Local\Temp\opencode\hero-video-old-720p.mp4 (37.2s).
+
+**Important git fix encountered**:
+- A previous local commit 624229 had the oversized 187MB video in its tree (never pushed). Subsequent pushes kept failing with "pre-receive hook declined / Large files detected (187.32 MB) > 100.00 MB".
+- **Fix**: git reset --soft 6ff7cf8 (collapse to remote state) -> remove the oversized blob from history -> stage ONLY website files -> single clean commit -> push.
+- Also fixed repeated HTTP 408 timeout on 41MB upload: git config http.postBuffer 1048576000.
+- Push: 6ff7cf8..cf4c73a main -> main ?
+
+**Committed**: cf4c73a "Replace hero video with gym_video_clear 1080p (41MB, black tail removed, 103.5s)"
+
+### Tasks Completed (Session 13)
+- ? New 1080p hero video installed (gym_video_clear_1080p.mp4)
+- ? Black/empty tail (last ~76s) removed - video now 103.5s
+- ? 41.1MB (under GitHub 100MB limit) - deployable
+- ? History cleaned of oversized 187MB blob + 408 watchdog settings added
+- ? Pushed live + local
+- ? AGENTS.md updated
+
+### Live
+- Live: https://priynashu3212-dev.github.io/Fitplay-Gym-Kaithal-Website/ (Ctrl+F5, Pages ~2-5 min)
+- Local: http://localhost:5000/
