@@ -382,10 +382,8 @@ function AboutPage() {
   return (
     <SiteLayout>
       <main>
-        <PageHero eyebrow="01 / The gym" title="Built for" accent="everyday athletes." copy="Fitplay is Kaithal's training ground for people who want to feel stronger, move better and keep showing up." />
-        <section className="section" style={{ backgroundImage: `url(${base}images/new.png)`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', position: 'relative' }}>
-          <div style={{ position: 'absolute', inset: 0, background: 'rgba(17,24,39,0.75)' }} aria-hidden="true" />
-          <div className="container-wide" style={{ position: 'relative', zIndex: 1 }}>
+        <PageHero eyebrow="01 / The gym" title="Built for" accent="everyday athletes." copy="Fitplay is Kaithal's training ground for people who want to feel stronger, move better and keep showing up." bg="images/new.png" />
+        <section className="section dark-panel"><div className="container-wide">
             <div className="intro-grid">
               <div className="reveal"><p className="eyebrow mb-5 text-[var(--acid)]">The Fitplay idea</p><p className="body-copy" style={{ color: 'rgba(245,241,232,0.8)' }}>We started with a simple belief: a gym should feel like a place you want to return to. The right equipment matters. So does a good coach, a familiar face and a floor that makes you want to get one more rep.</p></div>
               <div className="reveal delay-1"><p className="pull-quote" style={{ color: 'var(--acid)' }}>Come as you are. Train with intent. Leave a little stronger.</p></div>
@@ -396,8 +394,7 @@ function AboutPage() {
               <div className="stat" style={{ borderColor: 'rgba(245,241,232,0.2)' }}><div className="display stat-number" style={{ color: 'var(--acid)' }}>100%</div><div className="stat-label" style={{ color: 'rgba(245,241,232,0.7)' }}>No ego energy</div></div>
               <div className="stat"><div className="display stat-number" style={{ color: 'var(--acid)' }}>∞</div><div className="stat-label" style={{ color: 'rgba(245,241,232,0.7)' }}>Reasons to return</div></div>
             </div>
-          </div>
-        </section>
+          </div></section>
         <section className="section dark-panel"><div className="container-wide"><div className="flex flex-wrap items-end justify-between gap-8"><div className="reveal"><p className="eyebrow mb-5 text-[var(--acid)]">02 / The crew</p><h2 className="display section-title">Good people<br /><span className="text-[var(--acid)]">get results.</span></h2></div><p className="body-copy body-copy-dark reveal delay-1">Our coaches know the difference between pushing you and showing up for you. Expect both.</p></div><TeamGrid /></div></section>
       </main>
     </SiteLayout>
