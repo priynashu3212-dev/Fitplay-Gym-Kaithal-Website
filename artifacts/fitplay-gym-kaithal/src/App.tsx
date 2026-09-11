@@ -184,115 +184,30 @@ function SiteLayout({ children }: { children: ReactNode }) {
 
 function IntroOverlay({ onFinish, base }: { onFinish: () => void; base: string }) {
   const clipRefs = useRef<HTMLVideoElement[]>([]);
-  const ringRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const rootRef = useRef<HTMLDivElement>(null);
-  const songRef = useRef<HTMLAudioElement>(null);
-  const finishRef = useRef(onFinish);
-  finishRef.current = onFinish;
   const clips = ['scene-01','scene-02','scene-03','scene-04','scene-05','scene-06','scene-07','scene-08','scene-09','scene-10'];
-  const count = clips.length;
-
   useEffect(() => {
-    if (!clipRefs.current.length) return;
-    const videos = clipRefs.current;
-    videos.forEach(v => { if (v) { v.currentTime = 0; v.play().catch(() => {}); v.style.zIndex = String(iOffset(v)); } });
-    function iOffset(v: HTMLVideoElement) { return videos.indexOf(v) + 1; }
-
-    const ringSize = () => {
-      const radius = Math.min(window.innerWidth, window.innerHeight) * 0.30;
-      if (ringRef.current) {
-        const size = radius * 2.3;
-        ringRef.current.style.width = `${size}px`;
-        ringRef.current.style.height = `${size}px`;
-        ringRef.current.style.transform = 'translate(-50%,-50%)';
-      }
-    };
-    ringSize();
-    window.addEventListener('resize', ringSize);
-
-    videos.forEach((v, i) => setTimeout(() => {
-      const startX = (Math.random() - 0.5) * window.innerWidth * 1.1;
-      const startY = (Math.random() - 0.5) * window.innerHeight * 1.1;
-      const startRot = (Math.random() - 0.5) * 120;
-      v.style.transition = 'transform 1.15s cubic-bezier(.16,.84,.28,1), opacity .6s ease';
-      v.style.transform = `translate(-50%,-50%) translate(${startX}px, ${startY}px) rotate(${startRot}deg) scale(0.7)`;
-      v.style.opacity = '1';
-    }, i * 25));
-
-    setTimeout(() => videos.forEach((v, i) => setTimeout(() => {
-      const radius = Math.min(window.innerWidth, window.innerHeight) * 0.30;
-      const angle = (i / count) * Math.PI * 2 - Math.PI / 2;
-      const x = Math.cos(angle) * radius;
-      const y = Math.sin(angle) * radius;
-      const rot = (angle * 180 / Math.PI) + 90;
-      v.style.transform = `translate(-50%,-50%) translate(${x}px, ${y}px) rotate(${rot}deg) scale(1)`;
-    }, i * 40)), 500);
-
-    const GROW_AT = 2900;
-    const GROW_STAGGER = 300;
-    setTimeout(() => videos.forEach((v, i) => setTimeout(() => {
-      const radius = Math.min(window.innerWidth, window.innerHeight) * 0.30;
-      const angle = (i / count) * Math.PI * 2 - Math.PI / 2;
-      const x = Math.cos(angle) * radius;
-      const y = Math.sin(angle) * radius;
-      const rot = (angle * 180 / Math.PI) + 90;
-      const scale = Math.max(window.innerWidth, window.innerHeight) / (v.offsetWidth || 96) * 1.05;
-      v.style.transition = 'transform 1.5s cubic-bezier(.45,.05,.55,.95), opacity .8s ease';
-      v.style.transform = `translate(-50%,-50%) translate(${x}px, ${y}px) rotate(${rot}deg) scale(${scale})`;
-    }, i * GROW_STAGGER)), GROW_AT);
-
-    const SHRINK_AT = GROW_AT + count * GROW_STAGGER + 1300;
-    setTimeout(() => {
-      if (titleRef.current) titleRef.current.classList.add('show');
-    }, SHRINK_AT - 450);
-    setTimeout(() => {
-      videos.forEach((v) => {
-        v.style.transition = 'transform 1s cubic-bezier(.55,0,.85,.36), opacity 1s ease';
-        v.style.transform = 'translate(-50%,-50%) translate(0, 0) rotate(0deg) scale(0.02)';
-        v.style.opacity = '0';
-      });
-      if (ringRef.current) { ringRef.current.style.transition = 'opacity .5s ease'; ringRef.current.style.opacity = '0'; }
-    }, SHRINK_AT);
-
-    const fadeAt = SHRINK_AT + 1150;
-    const finishTimer = window.setTimeout(() => {
-      if (rootRef.current) rootRef.current.classList.add('video-intro-hide');
-      window.setTimeout(() => finishRef.current(), 500);
-    }, fadeAt);
-
-    const song = songRef.current;
-    const trySong = () => { if (song) { song.volume = 0.9; song.play().catch(() => {}); } };
-    trySong();
-    const onGesture = () => trySong();
-    window.addEventListener('pointerdown', onGesture);
-
-    return () => {
-      window.removeEventListener('resize', ringSize);
-      window.removeEventListener('pointerdown', onGesture);
-      window.clearTimeout(finishTimer);
-      videos.forEach(v => { if (v) { v.pause(); } });
-      if (song) song.pause();
-    };
-  }, [count]);
-
+    const t = window.setTimeout(() => {
+      clipRefs.current.forEach((v, i) => { if (v) { v.currentTime = 0; v.play().catch(() => {}); } });
+    }, 150);
+    return () => window.clearTimeout(t);
+  }, []);
   return (
-    <div className="video-intro" ref={rootRef} role="dialog" aria-modal="true" aria-label="Fitplay Gym intro">
-      <audio ref={songRef} src={`${base}assets/intro/intro-song.mp3`} preload="auto" aria-hidden="true" />
+    <div className="video-intro" role="dialog" aria-modal="true" aria-label="Fitplay Gym intro">
       <div className="intro-glow intro-glow-a" aria-hidden="true" />
       <div className="intro-glow intro-glow-b" aria-hidden="true" />
       <div className="intro-grid-lines" aria-hidden="true" />
       <div className="intro-clips" aria-hidden="true">
         {clips.map((c, i) => (
-          <video key={c} className="intro-clip" muted playsInline loop
+          <video key={c} className={`intro-clip intro-clip-${i}`} muted playsInline loop
             ref={el => { clipRefs.current[i] = el!; }}
           ><source src={`${base}assets/intro/${c}.mp4`} type="video/mp4" /></video>
         ))}
-        <div className="intro-ring" ref={ringRef} aria-hidden="true" />
+        <div className="intro-ring" aria-hidden="true" />
       </div>
       <div className="video-intro-content">
+        <h1 className="intro-title">FITPLAY GYM</h1>
         <div className="intro-progress" aria-hidden="true"><span /></div>
-        <h1 className="intro-title center-content" ref={titleRef}>FITPLAY GYM</h1>
+        <button className="intro-enter" onClick={onFinish}>ENTER SITE</button>
       </div>
     </div>
   );
@@ -306,46 +221,33 @@ function Home() {
   const heroVideoRef = useRef<HTMLVideoElement>(null);
   const heroAudioRef = useRef<HTMLAudioElement>(null);
   const photoTimerRef = useRef<number | null>(null);
-  const introVisibleRef = useRef(true);
-  const pendingSoundRef = useRef(false);
-
-  const enableSound = () => {
-    const audio = heroAudioRef.current;
-    if (audio) {
-      audio.volume = 0.9;
-      audio.play().catch(() => {});
-      setHeroSound(true);
-    }
-  };
-
   const finishIntro = () => {
     window.sessionStorage.setItem('fitplay-intro-seen', 'true');
-    introVisibleRef.current = false;
-    if (pendingSoundRef.current) enableSound();
     setIntroVisible(false);
   };
 
   useEffect(() => {
-    if (window.sessionStorage.getItem('fitplay-intro-seen')) {
-      introVisibleRef.current = false;
-      setIntroVisible(false);
-    }
+    if (window.sessionStorage.getItem('fitplay-intro-seen')) setIntroVisible(false);
   }, []);
 
   useEffect(() => {
     if (!introVisible) return;
-    const timer = window.setTimeout(finishIntro, 12000);
+    const timer = window.setTimeout(finishIntro, 10500);
     return () => window.clearTimeout(timer);
   }, [introVisible]);
 
   useEffect(() => {
+    const enableSound = () => {
+      const audio = heroAudioRef.current;
+      if (audio) {
+        audio.volume = 0.9;
+        audio.play().catch(() => {});
+        setHeroSound(true);
+      }
+    };
     const handler = (e: Event) => {
       if ((e.target as HTMLElement)?.closest('.hero-sound')) return;
-      if (introVisibleRef.current) {
-        pendingSoundRef.current = true;
-      } else {
-        enableSound();
-      }
+      enableSound();
       window.removeEventListener('click', handler);
       window.removeEventListener('touchstart', handler);
       window.removeEventListener('keydown', handler);
