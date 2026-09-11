@@ -931,3 +931,41 @@ Start-Process -FilePath "cmd.exe" -ArgumentList "/c C:\Users\Admin\Fitplay-Gym-K
 - ? Full new sequence: scatter -> ring -> ascending full-screen growth -> merge into tiny FITPLAY -> AUTO-ENTER (NO button)
 - ? Build clean, deployed to GitHub Pages, pushed
 - ? AGENTS.md updated
+
+---
+
+### Session 17 - September 11, 2026 (Thursday)
+
+**User messages** (in order):
+1. "vo sab to thik h lekin vo akhiri vali vedio delete kro vha s trdmill wale uski jgh koi aur lagao aur ye sab photo bhut blurr h" - delete the last video (the treadmill one) from the intro clips, replace with something else; also the clips/photos are VERY blurry.
+2. "aur background m site chl rhi h mna kha tha jab tk animation clhega kuch background m nhi hona chiya animatin khtm hone k baad website ayyegi" - the website was still visible behind the intro animation; the animation must play over a full/opaque background with nothing behind it, and the website should only appear AFTER the animation ends.
+3. "sath m sare clip fitplay k ander jayee lekin vo sabh to fit play k ander se arhe h ye bhi dekho" - all clips should go INTO the FITPLAY title TOGETHER (simultaneously) at the end; currently it looked like they were coming OUT of Fitplay (reveal order + stagger made it read backwards).
+
+**Work Done**:
+1. **Replaced treadmill clip**: scene-10 was extracted from t=93s (the treadmill segment that was moved to END of the hero video). Re-extracted scene-10 from **t=80s** (normal gym footage, not treadmill). All 10 scene files re-encoded.
+2. **Sharpness fix**: clips were 480px wide (blurry when scaled for full-screen growth). Re-extracted ALL 10 clips at **1080x1080 square crop** (crop=1080:1080:0:420 from 1080x1920 source = center square), CRF 20, fps 24, unsharp filter 5:5:0.6:5:5:0.0. Sizes now ~0.9-1.6MB each (was 85-200KB). Verified: scene-01 = 1080x1080, 2.08s duration.
+   - Command used (per clip):
+     `ffmpeg -y -hide_banner -loglevel error -ss {T} -t 2 -i hero-video.mp4 -vf "crop=1080:1080:0:420,unsharp=5:5:0.6:5:5:0.0" -r 24 -c:v libx264 -preset medium -crf 20 -pix_fmt yuv420p -movflags +faststart scene-XX.mp4`
+   - Timestamps: scene-01=2s, 02=21, 03=28.5, 04=34, 05=43, 06=48, 07=50.5, 08=54.5, 09=60, **10=80 (was 93/treadmill)**
+3. **Opaque intro background**: `.video-intro` background changed from `transparent` -> `#0b0c10` (solid dark, matches site --ink  #111827 family). Now NOTHING behind the intro shows while the animation runs; website (hero video, nav, etc.) appears only after `.video-intro-hide` fades it out. Removed the old mobile `rgba(17,24,39,.94)` translucent look entirely (no longer present).
+4. **Clips go INTO Fitplay together (fix "coming out of Fitplay")**:
+   - Root cause: at shrink time the FITPLAY title got its `.show` at the SAME moment the clips started shrinking, plus clips shrank with a 70ms stagger. Because the title (z-index 1) sat directly at the convergence (0,0) point, the sequence visually read as clips SPRINGING OUT from behind the Fitplay text.
+   - Fix in `src/App.tsx` IntroOverlay:
+     - Title `.show` now fires **450ms BEFORE** shrink (target appears first, clips then enter it)
+     - All 10 clips now shrink **SIMULTANEOUSLY** (removed the `i * 70` stagger) in one forEach with identical 0.7s transition, all `scale(0.02)` at center
+     - Since `.intro-clips` (z-index 0) sits below `.video-intro-content` (z-index 1), clips now visibly pass BEHIND the FITPLAY letters as they converge → reads as clips going INTO Fitplay, ending in a tiny point at the title
+     - fadeAt bumped SHRINK_AT+900 -> SHRINK_AT+950 (tiny slack because shrink is now 0.7s not 0.8s)
+
+**Deployed**: docs/ rebuilt (new 1080px scene clips + hashed CSS/JS), .nojekyll restored
+- **Note**: pushed commit 5e2d99b (Session 16) was only the 480px-blurry clip version build; this Session 17 rebuild is the sharp/opaque/treadmill-free + Fitplay-into-grow version (previous 5e2d99b had NOT yet been deployed when user gave Session 17 feedback, so it was superseded)
+- Commit: "Replace treadmill clip, sharpen intro clips to 1080px, opaque intro bg, clips converge into FITPLAY"
+- Local: http://localhost:5000/ ? Live: https://priynashu3212-dev.github.io/Fitplay-Gym-Kaithal-Website/
+
+### Tasks Completed (Session 17)
+- ? Treadmill clip replaced (scene-10 now from t=80s normal footage)
+- ? All intro clips sharpened: 480px -> 1080x1080 CRF20 (crisp even at full-screen growth)
+- ? Intro background now opaque #0b0c10 - nothing visible behind animation
+- ? Website appears only AFTER animation ends (fade handles transition)
+- ? Fixed "coming out of Fitplay": title shows first, ALL clips shrink together into the FITPLAY letters (behind title)
+- ? Build clean, deployed to GitHub Pages, pushed
+- ? AGENTS.md updated

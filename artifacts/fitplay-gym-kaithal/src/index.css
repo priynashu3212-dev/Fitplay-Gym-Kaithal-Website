@@ -351,7 +351,7 @@
   .fitplay-page .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
   .fitplay-page .gallery-caption { display: none; }
 }
-.fitplay-page .video-intro { position: fixed; z-index: 100; inset: 0; overflow: hidden; display: grid; place-items: center; background: transparent; color: var(--paper); animation: intro-in .5s ease both; }
+.fitplay-page .video-intro { position: fixed; z-index: 100; inset: 0; overflow: hidden; display: grid; place-items: center; background: #0b0c10; color: var(--paper); animation: intro-in .5s ease both; }
 .fitplay-page .video-intro-hide { opacity: 0; transition: opacity .5s ease; animation: none; }
 .fitplay-page .intro-glow { position: absolute; border-radius: 50%; filter: blur(100px); opacity: .5; animation: glow-drift 9s ease-in-out infinite alternate; }
 .fitplay-page .intro-glow-a { width: 46vw; height: 46vw; background: rgba(230,57,70,.22); top: -14%; left: -10%; }

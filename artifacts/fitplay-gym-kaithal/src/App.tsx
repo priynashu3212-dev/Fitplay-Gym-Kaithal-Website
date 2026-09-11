@@ -242,18 +242,20 @@ function IntroOverlay({ onFinish, base }: { onFinish: () => void; base: string }
       v.style.transform = `translate(-50%,-50%) translate(${x}px, ${y}px) rotate(${rot}deg) scale(${scale})`;
     }, i * GROW_STAGGER)), GROW_AT);
 
-    const SHRINK_AT = GROW_AT + count * GROW_STAGGER + 1400;
+    const SHRINK_AT = GROW_AT + count * GROW_STAGGER + 1200;
     setTimeout(() => {
-      videos.forEach((v, i) => setTimeout(() => {
-        v.style.transition = 'transform .8s cubic-bezier(.55,0,.85,.36), opacity .8s ease';
+      if (titleRef.current) titleRef.current.classList.add('show');
+    }, SHRINK_AT - 450);
+    setTimeout(() => {
+      videos.forEach((v) => {
+        v.style.transition = 'transform .7s cubic-bezier(.55,0,.85,.36), opacity .7s ease';
         v.style.transform = 'translate(-50%,-50%) translate(0, 0) rotate(0deg) scale(0.02)';
         v.style.opacity = '0';
-      }, i * 70));
-      if (ringRef.current) { ringRef.current.style.transition = 'opacity .6s ease'; ringRef.current.style.opacity = '0'; }
-      if (titleRef.current) titleRef.current.classList.add('show');
+      });
+      if (ringRef.current) { ringRef.current.style.transition = 'opacity .5s ease'; ringRef.current.style.opacity = '0'; }
     }, SHRINK_AT);
 
-    const fadeAt = SHRINK_AT + 900;
+    const fadeAt = SHRINK_AT + 950;
     const finishTimer = window.setTimeout(() => {
       if (rootRef.current) rootRef.current.classList.add('video-intro-hide');
       window.setTimeout(() => finishRef.current(), 500);
