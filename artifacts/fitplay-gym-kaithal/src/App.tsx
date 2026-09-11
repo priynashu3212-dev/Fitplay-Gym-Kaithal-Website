@@ -229,33 +229,33 @@ function IntroOverlay({ onFinish, base }: { onFinish: () => void; base: string }
       v.style.transform = `translate(-50%,-50%) translate(${x}px, ${y}px) rotate(${rot}deg) scale(1)`;
     }, i * 40)), 500);
 
-    const GROW_AT = 3000;
-    const GROW_STAGGER = 280;
+    const GROW_AT = 2900;
+    const GROW_STAGGER = 300;
     setTimeout(() => videos.forEach((v, i) => setTimeout(() => {
       const radius = Math.min(window.innerWidth, window.innerHeight) * 0.30;
       const angle = (i / count) * Math.PI * 2 - Math.PI / 2;
       const x = Math.cos(angle) * radius;
       const y = Math.sin(angle) * radius;
       const rot = (angle * 180 / Math.PI) + 90;
-      const scale = Math.max(window.innerWidth, window.innerHeight) / (v.offsetWidth || 96) * 1.15;
-      v.style.transition = 'transform 1.2s cubic-bezier(.2,.7,.2,1)';
+      const scale = Math.max(window.innerWidth, window.innerHeight) / (v.offsetWidth || 96) * 1.05;
+      v.style.transition = 'transform 1.5s cubic-bezier(.45,.05,.55,.95), opacity .8s ease';
       v.style.transform = `translate(-50%,-50%) translate(${x}px, ${y}px) rotate(${rot}deg) scale(${scale})`;
     }, i * GROW_STAGGER)), GROW_AT);
 
-    const SHRINK_AT = GROW_AT + count * GROW_STAGGER + 1200;
+    const SHRINK_AT = GROW_AT + count * GROW_STAGGER + 1300;
     setTimeout(() => {
       if (titleRef.current) titleRef.current.classList.add('show');
     }, SHRINK_AT - 450);
     setTimeout(() => {
       videos.forEach((v) => {
-        v.style.transition = 'transform .7s cubic-bezier(.55,0,.85,.36), opacity .7s ease';
+        v.style.transition = 'transform 1s cubic-bezier(.55,0,.85,.36), opacity 1s ease';
         v.style.transform = 'translate(-50%,-50%) translate(0, 0) rotate(0deg) scale(0.02)';
         v.style.opacity = '0';
       });
       if (ringRef.current) { ringRef.current.style.transition = 'opacity .5s ease'; ringRef.current.style.opacity = '0'; }
     }, SHRINK_AT);
 
-    const fadeAt = SHRINK_AT + 950;
+    const fadeAt = SHRINK_AT + 1150;
     const finishTimer = window.setTimeout(() => {
       if (rootRef.current) rootRef.current.classList.add('video-intro-hide');
       window.setTimeout(() => finishRef.current(), 500);
