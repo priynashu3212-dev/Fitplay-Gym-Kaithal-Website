@@ -365,9 +365,9 @@ function OfferList({ className = '' }: { className?: string }) {
   );
 }
 
-function PageHero({ eyebrow, title, accent, copy }: { eyebrow: string; title: string; accent: string; copy: string }) {
+function PageHero({ eyebrow, title, accent, copy, bg }: { eyebrow: string; title: string; accent: string; copy: string; bg?: string }) {
   return (
-    <section className="page-hero dark-panel grain">
+    <section className="page-hero dark-panel grain" style={bg ? { backgroundImage: `linear-gradient(rgba(17,24,39,.82), rgba(17,24,39,.78)), url(${base}${bg})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}>
       <div className="container-wide page-hero-content">
         <p className="eyebrow text-[var(--acid)] reveal">{eyebrow}</p>
         <h1 className="display page-title reveal delay-1">{title}<br /><span className="text-[var(--acid)]">{accent}</span></h1>
@@ -415,7 +415,7 @@ function TrainingPage() {
   return (
     <SiteLayout>
       <main>
-        <PageHero eyebrow="02 / Training" title="Train" accent="your way." copy="From your first squat to your strongest set, every session has a place here. No intimidation. Just good coaching and better consistency." />
+        <PageHero eyebrow="02 / Training" title="Train" accent="your way." copy="From your first squat to your strongest set, every session has a place here. No intimidation. Just good coaching and better consistency." bg="images/train.png" />
         <section className="dark-panel section pt-0"><div className="container-wide"><OfferList className="reveal" /><div className="class-grid"><article className="class-card tall acid-panel reveal delay-1"><span className="class-tag">Session focus / 01</span><div><h2 className="display class-name">Build<br />the base</h2><p className="mt-5">Strong movement patterns. Steady progress. The kind of work that stays with you.</p></div></article><div className="grid gap-[18px]"><article className="class-card orange-panel reveal delay-2"><span className="class-tag">Session focus / 02</span><div><h2 className="display class-name">Raise<br />the bar</h2><p className="mt-4">Push past the comfortable edge with smart, coached intensity.</p></div></article><article className="class-card reveal delay-3"><span className="class-tag">Session focus / 03</span><div><h2 className="display class-name">Keep<br />showing up</h2><p className="mt-4">The real transformation is built between the big moments.</p></div></article></div></div></div></section>
         <section className="section"><div className="container-wide"><div className="testimonial reveal"><div className="quote-mark">“</div><div><p className="quote-text">I joined for the equipment. I kept coming because everyone knows your name.</p><p className="quote-by">— Ankit, Fitplay member since 2021</p></div></div></div></section>
       </main>
@@ -428,7 +428,7 @@ function MembershipsPage() {
   return (
     <SiteLayout>
       <main>
-        <PageHero eyebrow="03 / Memberships" title="Choose" accent="your pace." copy="Straightforward memberships. Everything you need to make training part of your week, not another thing to overthink." />
+        <PageHero eyebrow="03 / Memberships" title="Choose" accent="your pace." copy="Straightforward memberships. Everything you need to make training part of your week, not another thing to overthink." bg="images/member.png" />
         <section className="dark-panel section pt-0"><div className="container-wide"><div className="pricing-grid pricing-grid-page"><PriceCard eyebrow="Start here" name="Monthly" amount="₹1,200" period="per month / no fuss" items={['Full gym access', 'Equipment orientation', 'Community floor']} /><PriceCard featured eyebrow="Best rhythm" name="Quarterly" amount="₹3,000" period="three months / keep momentum" items={['Full gym access', 'Goal-setting check-in', 'Save ₹600 overall']} /><PriceCard eyebrow="Go all in" name="Annual" amount="₹9,600" period="twelve months / your year" items={['Full gym access', 'Quarterly progress review', 'Save ₹4,800 overall']} /></div><div className="membership-note reveal"><p className="eyebrow text-[var(--acid)]">Included with every plan</p><p>Friendly floor support, a clean training space, and a community that will notice when you show up.</p></div></div></section>
       </main>
     </SiteLayout>
