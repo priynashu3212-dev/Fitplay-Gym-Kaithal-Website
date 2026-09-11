@@ -873,3 +873,61 @@ Start-Process -FilePath "cmd.exe" -ArgumentList "/c C:\Users\Admin\Fitplay-Gym-K
 - ? FITPLAY title + progress + ENTER SITE appear after convergence
 - ? Live + local synced, pushed
 - ? AGENTS.md updated
+
+---
+
+### Session 16 - September 11, 2026 (Thursday)
+
+**User messages** (in order this session):
+1. User referred to a downloaded file `C:\Users\Admin\Downloads\gym-intro-animation.html` (+ a `copy_...mov`) and wanted THAT animation style: photos/tiles scattered -> converge into a circle ring -> hold -> dissolve -> reveal gym name + ENTER SITE (this was the reference design). Also asked for video clips in big frames instead of plain photos, and a **transparent** intro background.
+2. "opening animation m ek chota sa opening song bhi dal deta lekin animation khtm hone k baad jo bhi song tha website ka vhi rhna chhiya" - add a small opening song to the intro animation; after the animation ends, the website's normal song (hero-audio.mp3) should continue.
+3. Final animation redesign request (Hinglish): the intro clips should start small, keep growing bigger (ascending order) up to full-screen, then at the very end all merge together into a tiny point that goes INSIDE the "FITPLAY" text, then the site enters itself AUTOMATICALLY - NO "Enter Site" button, no click.
+
+**Reference design analysed** (`Downloads/gym-intro-animation.html`):
+- Tiles = photos (picsum placeholders) created at random scattered positions (scale .7, random rotation)
+- After 500ms they converge into a circle outline (angle-based positions, radius = 0.30 x min(innerW, innerH))
+- Ring holds briefly, then tiles dissolve (scale .4 + fade) and gym name + tagline + ENTER button reveal
+- Click-through fades intro, shows site
+
+**Work Done**:
+1. **Intro song created** (`public/assets/intro/intro-song.mp3`, 182KB, 10.5s):
+   - `ffmpeg -y -hide_banner -loglevel error -ss 0 -i public/assets/hero-audio.mp3 -t 10.5 -af "afade=t=in:st=0:d=1.2,afade=t=out:st=9:d=1.5" -c:a libmp3lame -q:a 2 public/assets/intro/intro-song.mp3`
+   - (First 10.5s of hero-audio with fade-in + fade-out; plays ONLY during intro overlay)
+2. **IntroOverlay rewritten** (`src/App.tsx`) - new full-screen growth sequence, no button:
+   - Audio element for intro-song inside overlay (tries autoplay + retries on pointerdown)
+   - Phase 1 (t~0-500ms): clips scatter at random positions (scale .7, random rotate, staggered 25ms)
+   - Phase 2 (t~500ms+): converge into circle ring (angle = i/10*2pi - pi/2, radius 0.30*min(vw,vh), rotate radial, stagger 40ms) - `.intro-ring` glow circle sized to ring (2.3x radius)
+   - Phase 3 (GROW_AT=3000ms): each clip grows FULL-SCREEN in ascending order (stagger 280ms, 1.2s transition, scale = max(vw,vh)/clipWidth*1.15) - fills the whole screen progressively
+   - Phase 4 (SHRINK_AT = GROW_AT + count*280 + 1400 ≈ 7.2s): all clips shrink together to a tiny 0.02 scale point at center (stagger 70ms) while ring fades and FITPLAY title reveals (.show)
+   - Phase 5 (fadeAt ≈ 8.1s): overlay fades out (`.video-intro-hide`), then `finishRef.current()` fires -> auto-enters website, NO Enter Site button
+   - Clips z-index 1..10 (ascending DOM order so later clips overlay during growth)
+   - Cleanup: pauses clips + song, clears timers/listeners
+3. **Home (`src/App.tsx`) sound handoff reworked**:
+   - `enableSound()` extracted (plays heroAudioRef at vol 0.9)
+   - `finishIntro()` now: sets sessionStorage flag, if a pending sound was requested during intro (`pendingSoundRef`) -> `enableSound()` so the WEBSITE SONG continues after the intro song; sets `introVisible=false`
+   - Global first-click/keydown/touch handler: if intro still visible -> just set `pendingSoundRef=true` (don't start hero song yet, intro song is playing); else -> `enableSound()` as before
+   - Auto-finish fallback timer 10.5s -> 12s (safety net in case IntroOverlay's own timer fails)
+4. **CSS updates** (`src/index.css`):
+   - `.video-intro` reinstated as `display:grid; place-items:center` (content was top-left after last session's HTML-port rewrite)
+   - Added `.video-intro-hide` (fade-out before finish)
+   - `.intro-progress`/`span` reworked: progress bar fills via new `intro-fill` 8.5s keyframe (rsquo; no longer tied to removed ENTER button timing)
+   - `.intro-ring` opacity default .9
+   - Removed ENTER button styles usage (`.intro-enter` rules still present but unused; button removed from JSX)
+   - Mobile: no changes needed (clip size 70px on &le;480px still fine)
+
+**Timeline (approx, desktop/mobile auto):**
+- 0-0.5s scatter in / 0.5-3s ring converge / 3-5.8s ascending full-screen growth / 7.2s shrink-to-FITPLAY + title / 8.1s fade out / auto-enter site
+- auto-finish fsafe fallback 12s in Home
+
+**Deployed**: docs/ rebuilt (intro-song.mp3 + scene clips in docs/assets/intro), .nojekyll restored
+- TODO commit message: "Auto-enter circular convergence intro with opening song (full-screen growth, no button)"
+- Local: http://localhost:5000/ ・ Live: https://priynashu3212-dev.github.io/Fitplay-Gym-Kaithal-Website/
+
+### Tasks Completed (Session 16)
+- ? Reference animation (gym-intro-animation.html) analysed: scattered -> circle ring -> dissolve -> name+button
+- ? Intro now uses VIDEO scene clips in big frames, intro background TRANSPARENT (hero video shows through)
+- ? Opening song (intro-song.mp3, 10.5s fade in/out from hero-audio) plays during intro
+- ? After intro, website's normal hero song continues automatically (if sound was activated)
+- ? Full new sequence: scatter -> ring -> ascending full-screen growth -> merge into tiny FITPLAY -> AUTO-ENTER (NO button)
+- ? Build clean, deployed to GitHub Pages, pushed
+- ? AGENTS.md updated
