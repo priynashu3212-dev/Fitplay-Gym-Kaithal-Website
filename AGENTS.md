@@ -835,3 +835,41 @@ Start-Process -FilePath "cmd.exe" -ArgumentList "/c C:\Users\Admin\Fitplay-Gym-K
 ### Live
 - Live: https://priynashu3212-dev.github.io/Fitplay-Gym-Kaithal-Website/ (Ctrl+F5, Pages ~2-5 min)
 - Local: http://localhost:5000/
+
+---
+
+### Session 15 - September 11, 2026 (Thursday)
+
+**User message**: "jab bhi website open hoti h vo ata h na ek animation enter site wala vo abb pura transparnt hogya h jo ki kind of weird lag rha ha... Circular Image Convergence Animation ye animation lgana h iske liya website ki jo video h uski 2 sec ki clip uthlo har ek video clip se"
+
+**Request**: Intro/Enter-Site animation was TOO transparent (background visible through it - looked weird). User wants a NEW animation: **"Circular Image Convergence"** - take 2-second clips from every scene of the hero video, and they converge into a circle.
+
+**Work Done**:
+1. **Detected hero video scene boundaries** (ffmpeg scene threshold 0.3): t = 20.77, 27.8, 33.3, 42.53, 47.3, 49.6, 53.37, 59.2, 66.87 (video = 97.37s)
+2. **Extracted 10 two-second scene clips** from hero-video.mp4 (480px, CRF 30, fps 24, ~85-200KB each):
+   - `public/assets/intro/scene-01.mp4` (t=2s): scene-01...scene-10
+   - Scene timestamps: 2, 21, 28.5, 34, 43, 48, 50.5, 54.5, 60, 93
+3. **Rewrote IntroOverlay** (`src/App.tsx`):
+   - Renders 10 `<video muted loop playsInline>` elements (one per scene clip) inside `.intro-clips`
+   - Small clips file (intro/scene-XX.mp4) instead of loading full 89MB hero-video 4x
+   - Added `.intro-ring` element (red glowing circle border)
+4. **New CSS** (`src/index.css`):
+   - `.video-intro` background: `rgba(17,24,39,.9)` + blur 18px (semi-dark - NOT fully transparent anymore)
+   - `.intro-clip` = circular (border-radius 50%), scattered start positions around edges
+   - 10 keyframes `conv-0`..`conv-9` - each clip animates from its scattered edge position toward CENTER (staggered delays .05-.95s, total 3.8s) -> all converge into center circle
+   - `.intro-ring` scales in around center (ring-in keyframe) - glowing red circle border
+   - Title now appears AFTER convergence (~5s), progress bar ~5.5s, ENTER SITE ~5.9s
+5. Auto-finish timer bumped 5600ms ? 10500ms (full sequence visible)
+
+**Deployed**: docs/ rebuilt, .nojekyll restored, committed `b6d7c0f` "Add circular image convergence intro animation", pushed `c8eca83..b6d7c0f main ? main`
+- Local: http://localhost:5000/ (200 OK)
+- Live: https://priynashu3212-dev.github.io/Fitplay-Gym-Kaithal-Website/ (200 OK)
+
+### Tasks Completed (Session 15)
+- ? Intro no longer fully transparent (semi-dark `rgba(17,24,39,.9)` backdrop)
+- ? Circular Image Convergence Animation added
+- ? 10 scene clips (2s each) extracted from hero video
+- ? Clips converge from edges into a glowing circle ring
+- ? FITPLAY title + progress + ENTER SITE appear after convergence
+- ? Live + local synced, pushed
+- ? AGENTS.md updated
