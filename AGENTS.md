@@ -969,3 +969,44 @@ Start-Process -FilePath "cmd.exe" -ArgumentList "/c C:\Users\Admin\Fitplay-Gym-K
 - ? Fixed "coming out of Fitplay": title shows first, ALL clips shrink together into the FITPLAY letters (behind title)
 - ? Build clean, deployed to GitHub Pages, pushed
 - ? AGENTS.md updated
+
+---
+
+### Session 18 - September 11, 2026 (Thursday)
+
+**User messages**:
+1. "bilkul smooth nhi h" - the intro animation was not smooth at all
+2. "tere baas k nhi lag rha mujhe" - user felt the animation was out of control / not smooth enough
+3. "akhir m ata ata sab khuch bekar ek kam kar vapis vaisa hi kar de 'Circular Image Convergence Animation' wala vhi" - everything got worse; REVERT back to the "Circular Image Convergence Animation" version (Session 15, commit b6d7c0f)
+
+**Work Done (smoothness attempts, then revert)**:
+1. **Smoothness pass #1** (was mid-edit when user reverted):
+   - Cleaned duplicate `.intro-glow`/`.intro-ent`/`.intro-brand`/`.intro-letter` CSS in index.css (40+ lines of unused/duplicate rules removed)
+   - Blur glow (`filter: blur(100px)`) -> radial-gradient based glow (much cheaper to composite)
+   - `.intro-clip`: removed box-shadow+outline (re-painted each frame at huge scale) -> thin border + GPU hints (`translateZ(0)`, `will-change: transform, opacity`)
+   - Grow easing softened (1.5s cubic-bezier(.45,.05,.55,.95)), stagger 300ms, scale 1.05
+2. **Lighter clips**: re-encoded all 10 scene clips 1080x1080 -> **720x720 CRF23** (~330-620KB each, down from ~1-1.6MB) - less GPU/decoder load
+3. **Deployed + pushed** commit `a61df80` "Smooth intro: lighter 720p clips, GPU-friendly CSS, softer grow easing" (verified live 200)
+4. **User said everything became worse -> REVERT to Session 15 "Circular Image Convergence Animation"**:
+   - `git checkout b6d7c0f -- src/App.tsx src/index.css` (exact Session 15 intro: clips scattered at edges -> converge into center circle ring with glow -> FITPLAY title + ENTER SITE button; auto-result timeout 10500ms)
+   - NOTE: Kept the 720x720 scene clips (Session 18) - they look identical at intro scale but load much lighter; no need to go back to 480px blurry clips
+5. **User follow-up**: "aur us intro ko bas full screen krde aur fitplay text ko italian font m krdeeee":
+   - `.intro-clip`: clamp(110px,22vw,180px) -> **clamp(150px,34vw,320px)** + border 2px red + stronger ring glow (bigger, more fullscreen)
+   - `.intro-ring`: clamp(140px,30vw,240px) -> **clamp(240px,46vw,460px)** (much bigger circle)
+   - `.intro-title`: added `font-style: italic` (Fitplay text now italic/italian look)
+   - Mobile (<=480px): clip 96px -> **120px**, ring added **190px**
+6. Build clean (`index-DGYWHsHo.css` / `index-Cxse3xXf.js`), deployed, committed `d2f19e8` "Restore circular convergence intro + bigger fullscreen clips/ring + italic FITPLAY title", pushed `a61df80..d2f19e8 main -> main`
+
+### Tasks Completed (Session 18)
+- ? Intro reverted to Session 15 "Circular Image Convergence" animation (clips -> center circle ring, title + ENTER SITE)
+- ? Clips + ring made bigger/fullscreen feel on desktop + mobile
+- ? FITPLAY title now italic font
+- ? Session 18 720px clips kept (lighter load, same look)
+- ? Build clean, deployed to GitHub Pages, pushed
+- ? AGENTS.md updated
+
+**Important learning**: User does NOT want the full-screen-grow / auto-enter / soundtrack redesign from Sessions 16-17. The preferred intro is the original **Circular Image Convergence** (Session 15 style): dark backdrop, 10 scene clips converge into a centered glowing ring ~5s, then FITPLAY GYM title (italic) + ENTER SITE button. Do not re-introduce full-screen clip growth or auto-enter without asking.
+
+### Live
+- Live: https://priynashu3212-dev.github.io/Fitplay-Gym-Kaithal-Website/ (Ctrl+F5, Pages ~2-5 min)
+- Local: http://localhost:5000/
