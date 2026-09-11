@@ -417,4 +417,11 @@
   .fitplay-page .contact-details { padding-top: 20px; }
   .fitplay-page .video-intro-media { object-position: center center; }
   .fitplay-page .gallery-caption { display: none; }
+  .fitplay-page .hero-showing-photo { align-items: center; padding-top: 72px; }
+  .fitplay-page .hero-photo { object-fit: contain; object-position: center 30%; }
+}
+
+@media (max-width: 480px) {
+  .fitplay-page .hero-showing-photo { align-items: center; padding-top: 60px; }
+  .fitplay-page .hero-photo { object-fit: contain; object-position: center 22%; }
 }
