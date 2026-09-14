@@ -1,0 +1,13 @@
+# Files/dirs to skip when cloning to Render (speeds up backend deploy)
+.git
+docs
+artifacts/fitplay-gym-kaithal
+attached_assets
+artifacts/mockup-sandbox
+artifacts/fitplay-gym-kaithal/.replit-artifact
+node_modules
+*.zip
+server.log
+watchdog.log
+AGENTS.md
+replit.md
