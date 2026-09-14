@@ -1,11 +1,12 @@
-# Files/dirs to skip when cloning to Render (speeds up backend deploy)
+# .renderignore - files skipped when cloning to Render
+# NOTE: artifacts/fitplay-gym-kaithal must stay (pnpm workspace needs every package dir)
 .git
 docs
-artifacts/fitplay-gym-kaithal
 attached_assets
-artifacts/mockup-sandbox
-artifacts/fitplay-gym-kaithal/.replit-artifact
+artifacts/*/.replit-artifact
 node_modules
+artifacts/*/dist
+lib/*/dist
 *.zip
 server.log
 watchdog.log
