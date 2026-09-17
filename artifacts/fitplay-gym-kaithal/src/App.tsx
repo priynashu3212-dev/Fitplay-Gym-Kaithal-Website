@@ -24,6 +24,76 @@ import { Link, Route, Switch, useLocation, Router as WouterRouter } from 'wouter
 const queryClient = new QueryClient();
 const base = import.meta.env.BASE_URL;
 
+const SITE_URL = 'https://fitplay-gym.vercel.app';
+
+const SEO_DEFAULT = { title: 'Fitplay Gym Kaithal', description: 'Fitplay Gym Kaithal — the best gym in Kaithal, Haryana. Strength training, personal coaching and flexible memberships.', path: '/' };
+
+const PAGE_SEO: Record<string, { title: string; description: string; path: string }> = {
+  '/': SEO_DEFAULT,
+  '/about': {
+    title: 'About Fitplay Gym Kaithal | Our Story',
+    description: 'Discover the Fitplay Gym Kaithal story — a local gym built for everyday athletes who want to get stronger, move better and keep showing up.',
+    path: '/about',
+  },
+  '/training': {
+    title: 'Training Programs | Fitplay Gym Kaithal',
+    description: 'Training programs at Fitplay Gym Kaithal — strength floor, personal training, functional fitness and beginner foundations. Train your way in Kaithal.',
+    path: '/training',
+  },
+  '/gallery': {
+    title: 'Gym Gallery | Fitplay Gym Kaithal',
+    description: 'See inside Fitplay Gym Kaithal — the equipment, the energy and the people. Real frames from the Fitplay floor in Kaithal, Haryana.',
+    path: '/gallery',
+  },
+  '/memberships': {
+    title: 'Membership Plans & Prices | Fitplay Gym Kaithal',
+    description: 'Fitplay Gym Kaithal membership plans — Monthly ₹1,200 / Quarterly ₹3,000 / Annual ₹9,600. Straightforward pricing with everything you need to train regularly.',
+    path: '/memberships',
+  },
+  '/contact': {
+    title: 'Contact & Timings | Fitplay Gym Kaithal',
+    description: 'Contact Fitplay Gym Kaithal — open Mon–Sat 6AM–10PM, Sun 7AM–1PM near City Centre, Kaithal, Haryana. Call +91 98765 43210 or WhatsApp us.',
+    path: '/contact',
+  },
+};
+
+function usePageMeta(seo: { title: string; description: string; path: string }) {
+  useEffect(() => {
+    document.title = seo.title;
+    const url = `${SITE_URL}${seo.path}`;
+    const setMeta = (selector: string, attr: string, value: string) => {
+      const el = document.head.querySelector<HTMLMetaElement>(selector);
+      if (el) {
+        el.setAttribute(attr, value);
+      } else {
+        const meta = document.createElement('meta');
+        meta.setAttribute(attr, value);
+        document.head.appendChild(meta);
+      }
+    };
+    setMeta('meta[name="description"]', 'content', seo.description);
+    setMeta('meta[property="og:title"]', 'content', seo.title);
+    setMeta('meta[property="og:description"]', 'content', seo.description);
+    setMeta('meta[property="og:url"]', 'content', url);
+    setMeta('meta[name="twitter:title"]', 'content', seo.title);
+    setMeta('meta[name="twitter:description"]', 'content', seo.description);
+    let link = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'canonical';
+      document.head.appendChild(link);
+    }
+    link.href = url;
+  }, [seo.title, seo.description, seo.path]);
+}
+
+function SeoManager() {
+  const [location] = useLocation();
+  const path = location.split(/[?#]/)[0].replace(/\/$/, '') || '/';
+  usePageMeta(PAGE_SEO[path] ?? SEO_DEFAULT);
+  return null;
+}
+
 const navItems = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'The gym' },
@@ -526,7 +596,7 @@ function ContactPage() {
 }
 
 function Router() {
-  return <RoutedErrorBoundary><Switch><Route path="/" component={Home} /><Route path="/about" component={AboutPage} /><Route path="/training" component={TrainingPage} /><Route path="/gallery" component={GalleryPage} /><Route path="/memberships" component={MembershipsPage} /><Route path="/contact" component={ContactPage} /><Route component={NotFound} /></Switch></RoutedErrorBoundary>;
+  return <RoutedErrorBoundary><SeoManager /><Switch><Route path="/" component={Home} /><Route path="/about" component={AboutPage} /><Route path="/training" component={TrainingPage} /><Route path="/gallery" component={GalleryPage} /><Route path="/memberships" component={MembershipsPage} /><Route path="/contact" component={ContactPage} /><Route component={NotFound} /></Switch></RoutedErrorBoundary>;
 }
 
 function RoutedErrorBoundary({ children }: { children: ReactNode }) {
