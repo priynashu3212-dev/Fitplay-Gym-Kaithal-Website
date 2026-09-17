@@ -25,37 +25,155 @@ const queryClient = new QueryClient();
 const base = import.meta.env.BASE_URL;
 
 const SITE_URL = 'https://fitplay-gym.vercel.app';
+const SITE_IMAGE = `${SITE_URL}/images/girl.png`;
+const SITE_KEYWORDS = 'gym in kaithal, best gym in kaithal, kaithal gym, fitness gym kaithal, gym membership kaithal, gym price kaithal, personal trainer kaithal, gym near me kaithal, gym in kaithal haryana';
 
-const SEO_DEFAULT = { title: 'Fitplay Gym Kaithal', description: 'Fitplay Gym Kaithal — the best gym in Kaithal, Haryana. Strength training, personal coaching and flexible memberships.', path: '/' };
+const SEO_DEFAULT = {
+  title: 'Fitplay Gym Kaithal | Best Gym in Kaithal, Haryana',
+  description: 'Fitplay Gym Kaithal is the best gym in Kaithal, Haryana. Strength training, personal trainers, functional fitness and gym memberships from ₹1,200/month. Near City Centre, open Mon–Sat 6AM–10PM. Call +91 98765 43210.',
+  path: '/',
+};
 
 const PAGE_SEO: Record<string, { title: string; description: string; path: string }> = {
   '/': SEO_DEFAULT,
   '/about': {
-    title: 'About Fitplay Gym Kaithal | Our Story',
-    description: 'Discover the Fitplay Gym Kaithal story — a local gym built for everyday athletes who want to get stronger, move better and keep showing up.',
+    title: 'About Fitplay Gym Kaithal | Local Gym in Kaithal, Haryana',
+    description: 'Meet Fitplay Gym Kaithal — a local gym built in Kaithal for strength, fitness and everyday athletes. Founded 2017 near City Centre, Haryana.',
     path: '/about',
   },
   '/training': {
-    title: 'Training Programs | Fitplay Gym Kaithal',
-    description: 'Training programs at Fitplay Gym Kaithal — strength floor, personal training, functional fitness and beginner foundations. Train your way in Kaithal.',
+    title: 'Training Programs & Personal Trainers | Fitplay Gym Kaithal',
+    description: 'Training at Fitplay Gym Kaithal — strength floor, personal training, functional fitness and beginner foundations. The best personal trainers in Kaithal, Haryana.',
     path: '/training',
   },
   '/gallery': {
     title: 'Gym Gallery | Fitplay Gym Kaithal',
-    description: 'See inside Fitplay Gym Kaithal — the equipment, the energy and the people. Real frames from the Fitplay floor in Kaithal, Haryana.',
+    description: 'See inside Fitplay Gym Kaithal — the equipment, the energy and the people. Real photos from the best gym floor in Kaithal, Haryana.',
     path: '/gallery',
   },
   '/memberships': {
-    title: 'Membership Plans & Prices | Fitplay Gym Kaithal',
-    description: 'Fitplay Gym Kaithal membership plans — Monthly ₹1,200 / Quarterly ₹3,000 / Annual ₹9,600. Straightforward pricing with everything you need to train regularly.',
+    title: 'Gym Membership Price in Kaithal | Fitplay Gym' ,
+    description: 'Gym membership price in Kaithal at Fitplay Gym — Monthly ₹1,200 / Quarterly ₹3,000 / Annual ₹9,600. Simple, affordable gym plans near City Centre, Kaithal.',
     path: '/memberships',
   },
   '/contact': {
-    title: 'Contact & Timings | Fitplay Gym Kaithal',
-    description: 'Contact Fitplay Gym Kaithal — open Mon–Sat 6AM–10PM, Sun 7AM–1PM near City Centre, Kaithal, Haryana. Call +91 98765 43210 or WhatsApp us.',
+    title: 'Contact & Timings | Gym Near City Centre Kaithal | Fitplay Gym',
+    description: 'Contact Fitplay Gym Kaithal — open Mon–Sat 6AM–10PM, Sun 7AM–1PM near City Centre, Kaithal, Haryana. Call +91 98765 43210 or WhatsApp +91 8708551762.',
     path: '/contact',
   },
 };
+
+function pageSchema(path: string, seo: { title: string; description: string; path: string }) {
+  const url = `${SITE_URL}${seo.path}`;
+  const base: Record<string, unknown> = { '@context': 'https://schema.org' };
+  if (path === '/') {
+    return {
+      ...base,
+      '@graph': [
+        { '@id': `${SITE_URL}/#gym` },
+        {
+          '@type': 'FAQPage',
+          '@id': `${url}#faq`,
+          mainEntity: [
+            {
+              '@type': 'Question',
+              name: 'Is Fitplay the best gym in Kaithal?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Fitplay Gym Kaithal is built for serious training — good equipment, honest coaching and a community that keeps you coming back. Come for a free look near City Centre and decide for yourself.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'What is the gym membership price in Kaithal at Fitplay Gym?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Fitplay Gym Kaithal membership prices are Monthly ₹1,200, Quarterly ₹3,000 (you save ₹600) and Annual ₹9,600 (you save ₹4,800). No hidden charges.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'What are the gym timings in Kaithal?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Fitplay Gym Kaithal is open Monday to Saturday 6:00 AM to 10:00 PM and Sunday 7:00 AM to 1:00 PM.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Is there a personal trainer in Kaithal at Fitplay?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Yes. Fitplay Gym Kaithal offers one-to-one personal training and beginner foundations with experienced coaches.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Where is Fitplay Gym located in Kaithal?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Fitplay Gym is located near City Centre, Kaithal, Haryana. You can open the location in Google Maps from the contact page.',
+              },
+            },
+          ],
+        },
+      ],
+    };
+  }
+  if (path === '/memberships') {
+    return {
+      ...base,
+      '@type': 'OfferCatalog',
+      '@id': `${url}#catalog`,
+      name: 'Gym Membership Plans in Kaithal',
+      url,
+      description: seo.description,
+      itemListElement: [
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Monthly Gym Membership Kaithal' }, price: '1200', priceCurrency: 'INR', availability: 'https://schema.org/InStock' },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Quarterly Gym Membership Kaithal' }, price: '3000', priceCurrency: 'INR', availability: 'https://schema.org/InStock' },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Annual Gym Membership Kaithal' }, price: '9600', priceCurrency: 'INR', availability: 'https://schema.org/InStock' },
+      ],
+    };
+  }
+  if (path === '/training') {
+    return {
+      ...base,
+      '@type': 'OfferCatalog',
+      '@id': `${url}#training`,
+      name: 'Gym Training Programs in Kaithal',
+      url,
+      description: seo.description,
+      itemListElement: [
+        { '@type': 'Service', name: 'Strength Training in Kaithal', description: 'Free weights, racks and cables.' },
+        { '@type': 'Service', name: 'Personal Training in Kaithal', description: 'One-to-one coaching.' },
+        { '@type': 'Service', name: 'Functional Fitness Kaithal', description: 'Move better and feel ready for real life.' },
+        { '@type': 'Service', name: 'Beginner Foundations Kaithal', description: 'A friendly start for new gym members.' },
+      ],
+    };
+  }
+  return {
+    ...base,
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: seo.title,
+    description: seo.description,
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    about: { '@id': `${SITE_URL}/#gym` },
+  };
+}
+
+function injectPageJsonLd(schema: object) {
+  const id = 'page-jsonld';
+  let script = document.getElementById(id) as HTMLScriptElement | null;
+  if (!script) {
+    script = document.createElement('script');
+    script.id = id;
+    script.type = 'application/ld+json';
+    document.head.appendChild(script);
+  }
+  script.textContent = JSON.stringify(schema);
+}
 
 function usePageMeta(seo: { title: string; description: string; path: string }) {
   useEffect(() => {
@@ -72,9 +190,12 @@ function usePageMeta(seo: { title: string; description: string; path: string }) 
       }
     };
     setMeta('meta[name="description"]', 'content', seo.description);
+    setMeta('meta[name="keywords"]', 'content', SITE_KEYWORDS);
     setMeta('meta[property="og:title"]', 'content', seo.title);
     setMeta('meta[property="og:description"]', 'content', seo.description);
     setMeta('meta[property="og:url"]', 'content', url);
+    setMeta('meta[property="og:image"]', 'content', SITE_IMAGE);
+    setMeta('meta[name="twitter:image"]', 'content', SITE_IMAGE);
     setMeta('meta[name="twitter:title"]', 'content', seo.title);
     setMeta('meta[name="twitter:description"]', 'content', seo.description);
     let link = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
@@ -84,6 +205,7 @@ function usePageMeta(seo: { title: string; description: string; path: string }) 
       document.head.appendChild(link);
     }
     link.href = url;
+    injectPageJsonLd(pageSchema(seo.path, seo));
   }, [seo.title, seo.description, seo.path]);
 }
 
@@ -120,6 +242,29 @@ const galleryImages = [
   { src: `${base}images/gym-05.jpg`, label: 'Every rep counts', ratio: '1 / 1' },
   { src: `${base}images/gym-07.jpg`, label: 'Fitplay energy', ratio: '515 / 388' },
   { src: `${base}images/gym-09.jpg`, label: 'The crew', ratio: '1 / 1' },
+];
+
+const faqs = [
+  {
+    q: 'Is Fitplay the best gym in Kaithal?',
+    a: 'Fitplay Gym Kaithal is built for serious training — good equipment, honest coaching and a community that keeps you coming back. Come for a free look near City Centre and decide for yourself.',
+  },
+  {
+    q: 'What is the gym membership price in Kaithal at Fitplay Gym?',
+    a: 'Gym membership price in Kaithal at Fitplay is Monthly ₹1,200, Quarterly ₹3,000 (you save ₹600) and Annual ₹9,600 (you save ₹4,800). No hidden charges.',
+  },
+  {
+    q: 'What are the gym timings in Kaithal?',
+    a: 'Fitplay Gym Kaithal is open Monday to Saturday 6:00 AM to 10:00 PM and Sunday 7:00 AM to 1:00 PM.',
+  },
+  {
+    q: 'Is there a personal trainer in Kaithal at Fitplay?',
+    a: 'Yes. Fitplay Gym Kaithal offers one-to-one personal training and beginner foundations with experienced coaches.',
+  },
+  {
+    q: 'Where is Fitplay Gym located in Kaithal?',
+    a: 'Fitplay Gym is located near City Centre, Kaithal, Haryana. You can open the location in Google Maps from the contact page.',
+  },
 ];
 
 function useReveal() {
@@ -201,7 +346,7 @@ function Footer() {
             <a href="https://www.instagram.com/fitplaykaithal" target="_blank" rel="noreferrer" className="mt-5 flex items-center gap-2" data-testid="link-footer-instagram"><Instagram size={15} className="text-[var(--acid)]" /> @fitplaykaithal</a>
           </div>
         </div>
-        <div className="footer-bottom"><span>© 2024 Fitplay Gym Kaithal</span><span className="flex items-center gap-2"><Clock3 size={13} /> Train with intent.</span></div>
+        <div className="footer-bottom"><span>© 2026 Fitplay Gym Kaithal</span><span className="flex items-center gap-2"><Clock3 size={13} /> Train with intent.</span></div>
       </div>
     </footer>
   );
@@ -435,7 +580,17 @@ function Home() {
           </div>
         </section>
 
-        <section className="acid-panel cta-panel grain" aria-labelledby="home-cta-title"><div className="container-wide"><p className="eyebrow reveal">05 / Your first rep</p><h2 id="home-cta-title" className="display cta-title mt-8 reveal delay-1">Ready to<br /><span className="text-[var(--ember)]">start?</span></h2><p className="cta-copy reveal delay-2">Walk in for a look, ask us anything and get a feel for the floor.</p><Link href="/contact" className="button-dark reveal delay-3">Plan your visit <ArrowRight size={16} /></Link></div></section>
+        <section className="section dark-panel" aria-labelledby="home-faq-title">
+          <div className="container-wide">
+            <div className="intro-grid">
+              <div className="reveal"><p className="eyebrow mb-5 text-[var(--acid)]">06 / FAQ</p><p className="body-copy body-copy-dark">Quick answers about the best gym in Kaithal — membership price, timings, personal training and more.</p></div>
+              <div className="reveal delay-1"><h2 id="home-faq-title" className="display section-title">Asked &<br /><span className="text-[var(--acid)]">answered.</span></h2></div>
+            </div>
+            <FaqList />
+          </div>
+        </section>
+
+        <section className="acid-panel cta-panel grain" aria-labelledby="home-cta-title"><div className="container-wide"><p className="eyebrow reveal">07 / Your first rep</p><h2 id="home-cta-title" className="display cta-title mt-8 reveal delay-1">Ready to<br /><span className="text-[var(--ember)]">start?</span></h2><p className="cta-copy reveal delay-2">Walk in for a look, ask us anything and get a feel for the floor.</p><Link href="/contact" className="button-dark reveal delay-3">Plan your visit <ArrowRight size={16} /></Link></div></section>
       </main>
     </SiteLayout>
   );
@@ -446,6 +601,19 @@ function OfferList({ className = '' }: { className?: string }) {
     <div className={`offer-list ${className}`}>
       {trainingOffers.map(([index, name, description]) => (
         <Link href="/training" key={index} className="offer-item"><span className="offer-index">{index}</span><div><div className="offer-name">{name}</div><div className="offer-desc">{description}</div></div><ArrowRight size={19} /></Link>
+      ))}
+    </div>
+  );
+}
+
+function FaqList() {
+  return (
+    <div className="faq-list mt-14">
+      {faqs.map((f, i) => (
+        <details className="faq-item reveal" key={i}>
+          <summary className="faq-q"><span className="faq-num">0{i + 1}</span>{f.q}<span className="faq-toggle" aria-hidden="true" /></summary>
+          <p className="faq-a">{f.a}</p>
+        </details>
       ))}
     </div>
   );
