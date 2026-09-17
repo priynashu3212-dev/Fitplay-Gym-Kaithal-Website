@@ -30,7 +30,7 @@ const SITE_KEYWORDS = 'gym in kaithal, best gym in kaithal, kaithal gym, fitness
 
 const SEO_DEFAULT = {
   title: 'Fitplay Gym Kaithal | Best Gym in Kaithal, Haryana',
-  description: 'Fitplay Gym Kaithal is the best gym in Kaithal, Haryana. Strength training, personal trainers, functional fitness and gym memberships from ₹1,200/month. Near City Centre, open Mon–Sat 6AM–10PM. Call +91 98765 43210.',
+  description: 'Fitplay Gym Kaithal is the best gym in Kaithal, Haryana. Strength training, personal trainers, functional fitness and gym memberships from ₹1,200/month. Near City Centre, open Mon–Sat 6AM–10PM. Call +91 870551762.',
   path: '/',
 };
 
@@ -58,7 +58,7 @@ const PAGE_SEO: Record<string, { title: string; description: string; path: strin
   },
   '/contact': {
     title: 'Contact & Timings | Gym Near City Centre Kaithal | Fitplay Gym',
-    description: 'Contact Fitplay Gym Kaithal — open Mon–Sat 6AM–10PM, Sun 7AM–1PM near City Centre, Kaithal, Haryana. Call +91 98765 43210 or WhatsApp +91 8708551762.',
+    description: 'Contact Fitplay Gym Kaithal — open Mon–Sat 6AM–10PM, Sun 7AM–1PM near City Centre, Kaithal, Haryana. Call or WhatsApp +91 870551762.',
     path: '/contact',
   },
 };
@@ -338,7 +338,7 @@ function Footer() {
           <div>
             <p className="footer-label">Find us</p>
             <a href="https://maps.google.com/?q=Fitplay+Gym+Kaithal" target="_blank" rel="noreferrer" className="flex items-start gap-2" data-testid="link-footer-map"><MapPin size={15} className="mt-0.5 text-[var(--acid)]" />Near City Centre,<br />Kaithal, Haryana</a>
-            <a href="tel:+919876543210" className="mt-4 flex items-center gap-2" data-testid="link-footer-phone"><Phone size={14} className="text-[var(--acid)]" />+91 98765 43210</a>
+            <a href="tel:+91870551762" className="mt-4 flex items-center gap-2" data-testid="link-footer-phone"><Phone size={14} className="text-[var(--acid)]" />+91 870551762</a>
           </div>
           <div>
             <p className="footer-label">Hours</p>
@@ -741,7 +741,7 @@ function ContactPage() {
     <SiteLayout>
       <main>
         <PageHero eyebrow="04 / Contact" title="Make the" accent="first move." copy="Come in for a look, ask us anything and get a feel for the floor. Your first step does not need to be perfect. It just needs to happen." bg="images/page.png" />
-        <section className="section"><div className="container-wide"><div className="contact-grid"><div className="reveal"><p className="eyebrow mb-5 text-[var(--ember)]">Find the floor</p><h2 className="display section-title">See you<br /><span className="text-[var(--ember)]">at Fitplay.</span></h2><p className="body-copy mt-8">Near City Centre,<br />Kaithal, Haryana</p><a href="https://maps.google.com/?q=Fitplay+Gym+Kaithal" target="_blank" rel="noreferrer" className="button-dark mt-8">Open in Maps <MapPin size={16} /></a></div><div className="contact-details reveal delay-1"><div><p className="footer-label text-[var(--ember)]">Call</p><a className="contact-link" href="tel:+919876543210">+91 98765 43210</a></div><div><p className="footer-label text-[var(--ember)]">Hours</p><p className="contact-copy">Monday — Saturday<br />6:00 AM — 10:00 PM<br /><br />Sunday<br />7:00 AM — 1:00 PM</p></div><div><p className="footer-label text-[var(--ember)]">Social</p><a className="contact-link" href="https://www.instagram.com/fitplaykaithal" target="_blank" rel="noreferrer">@fitplaykaithal <Instagram size={18} /></a></div></div></div>
+        <section className="section"><div className="container-wide"><div className="contact-grid"><div className="reveal"><p className="eyebrow mb-5 text-[var(--ember)]">Find the floor</p><h2 className="display section-title">See you<br /><span className="text-[var(--ember)]">at Fitplay.</span></h2><p className="body-copy mt-8">Near City Centre,<br />Kaithal, Haryana</p><a href="https://maps.google.com/?q=Fitplay+Gym+Kaithal" target="_blank" rel="noreferrer" className="button-dark mt-8">Open in Maps <MapPin size={16} /></a></div><div className="contact-details reveal delay-1"><div><p className="footer-label text-[var(--ember)]">Call</p><a className="contact-link" href="tel:+91870551762">+91 870551762</a></div><div><p className="footer-label text-[var(--ember)]">Hours</p><p className="contact-copy">Monday — Saturday<br />6:00 AM — 10:00 PM<br /><br />Sunday<br />7:00 AM — 1:00 PM</p></div><div><p className="footer-label text-[var(--ember)]">Social</p><a className="contact-link" href="https://www.instagram.com/fitplaykaithal" target="_blank" rel="noreferrer">@fitplaykaithal <Instagram size={18} /></a></div></div></div>
         <a href="https://maps.google.com/?q=Fitplay+Gym+Kaithal" target="_blank" rel="noreferrer" className="contact-map reveal delay-1"><img src={`${base}images/map.png`} alt="Map to Fitplay Gym Kaithal" /></a></div></section>
         <section className="dark-panel section"><div className="container-wide"><div className="intro-grid"><div className="reveal"><p className="eyebrow mb-5 text-[var(--acid)]">Got a question?</p><h2 className="display section-title">Send an<br /><span className="text-[var(--acid)]">inquiry.</span></h2><p className="mt-5 max-w-[400px] text-sm leading-7 text-[rgba(245,241,232,.6)]">Got a query about the gym, membership or training? Drop your details below and we'll get back to you at your email.</p></div>
           <form className="inquiry-form reveal delay-1" onSubmit={handleInquiry}>

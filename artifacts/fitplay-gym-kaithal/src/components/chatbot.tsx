@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { MessageCircle, X, Send } from 'lucide-react';
 
-const WHATSAPP_URL = 'https://wa.me/918708551762?text=' + encodeURIComponent('Namaste Fitplay Gym! I want to know more about your gym. 💪');
+const WHATSAPP_URL = 'https://wa.me/91870551762?text=' + encodeURIComponent('Namaste Fitplay Gym! I want to know more about your gym. 💪');
 
 function WhatsAppIcon({ size = 26 }: { size?: number }) {
   return (
@@ -185,9 +185,9 @@ const INTENTS: { keywords: string[]; replies: string[] }[] = [
   {
     keywords: ['phone', 'contact', 'call', 'mobile', 'number', 'whatsapp', 'msg', 'contact number'],
     replies: [
-      'Call or WhatsApp us at +91 98765 43210, or DM @fitplaykaithal on Instagram. Message anytime — we reply fast! 📞',
+      'Call or WhatsApp us at +91 870551762, or DM @fitplaykaithal on Instagram. Message anytime — we reply fast! 📞',
       'You can also tap the green WhatsApp button on this site to chat with the owner directly. Easiest way to reach us! 📱',
-      'Reach the crew at +91 98765 43210. Prefer WhatsApp? Use the green button — we answer quickly!',
+      'Reach the crew at +91 870551762. Prefer WhatsApp? Use the green button — we answer quickly!',
     ],
   },
   {
@@ -223,7 +223,7 @@ const INTENTS: { keywords: string[]; replies: string[] }[] = [
   {
     keywords: ['free trial', 'demo', 'trial', 'first look', 'visit', 'book', 'look around', 'tour', 'pehli visit', 'free visit'],
     replies: [
-      'You are welcome to book a free first visit! Tap "Book a visit" on the site or call +91 98765 43210, and we will arrange a good time to show you around.',
+      'You are welcome to book a free first visit! Tap "Book a visit" on the site or call +91 870551762, and we will arrange a good time to show you around.',
       'Yes, we do free visits! Come see the floor, meet the crew, try a quick orientation — no pressure at all. Tap "Book a visit" and we will call you!',
       'First look is on us. Leave your details via "Book a visit" and the crew will set up your tour. Bring questions, we love them! 💛',
     ],
@@ -231,7 +231,7 @@ const INTENTS: { keywords: string[]; replies: string[] }[] = [
   {
     keywords: ['offer', 'discount', 'deal', 'student', 'couple', 'family', 'special offer'],
     replies: [
-      'We keep it simple at Fitplay — honest prices, and the longer you commit the more you save (₹600 on quarterly, ₹4,800 on annual). For student/couple/family offers, call +91 98765 43210! 🎯',
+      'We keep it simple at Fitplay — honest prices, and the longer you commit the more you save (₹600 on quarterly, ₹4,800 on annual). For student/couple/family offers, call +91 870551762! 🎯',
       'Best current deal: the Annual plan saves ₹4,800 — cheapest per month. For special offers, tap the WhatsApp button and ask the owner directly!',
       'Check our Memberships page for the latest plans and savings. Discounts for students and families are best discussed at the front desk — they will sort you out!',
     ],
@@ -313,7 +313,7 @@ const INTENTS: { keywords: string[]; replies: string[] }[] = [
 ];
 
 const FALLBACK = [
-  'Hmm, that is beyond my training range! 😅 I know plenty about membership prices, timings, location, workouts, diet and training programs. Try asking me one of those — or call +91 98765 43210 and the crew will help!',
+  'Hmm, that is beyond my training range! 😅 I know plenty about membership prices, timings, location, workouts, diet and training programs. Try asking me one of those — or call +91 870551762 and the crew will help!',
   'I did not quite catch that one! 🤔 But I can help with: prices, timings, location, workouts, beginner tips and more. Or tap the green WhatsApp button to ask the owner directly!',
   'That one is out of my gym zone! 🏋️ Ask me about memberships, timings, weight loss, workouts, or the owner — and I will answer in seconds.',
 ].join('\n\n');
