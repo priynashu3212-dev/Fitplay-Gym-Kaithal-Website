@@ -462,7 +462,16 @@ function IntroOverlay({ onFinish, base }: { onFinish: () => void; base: string }
   const clips = ['scene-01','scene-02','scene-03','scene-04','scene-05','scene-06','scene-07','scene-08','scene-09','scene-10'];
   useEffect(() => {
     const t = window.setTimeout(() => {
-      clipRefs.current.forEach((v, i) => { if (v) { v.currentTime = 0; v.play().catch(() => {}); } });
+      clipRefs.current.forEach((v) => {
+        if (!v) return;
+        v.muted = true;
+        v.defaultMuted = true;
+        v.playsInline = true;
+        if (typeof v.load === 'function') v.load();
+        v.currentTime = 0;
+        const p = v.play();
+        if (p && typeof p.then === 'function') p.catch(() => {});
+      });
     }, 150);
     return () => window.clearTimeout(t);
   }, []);
@@ -473,7 +482,7 @@ function IntroOverlay({ onFinish, base }: { onFinish: () => void; base: string }
       <div className="intro-grid-lines" aria-hidden="true" />
       <div className="intro-clips" aria-hidden="true">
         {clips.map((c, i) => (
-          <video key={c} className={`intro-clip intro-clip-${i}`} muted playsInline loop
+          <video key={c} className={`intro-clip intro-clip-${i}`} muted playsInline loop preload="auto"
             ref={el => { clipRefs.current[i] = el!; }}
           ><source src={`${base}assets/intro/${c}.mp4`} type="video/mp4" /></video>
         ))}
