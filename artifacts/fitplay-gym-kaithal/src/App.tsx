@@ -115,7 +115,51 @@ function pageSchema(path: string, seo: { title: string; description: string; pat
                 text: 'Fitplay Gym is located near City Centre, Kaithal, Haryana. You can open the location in Google Maps from the contact page.',
               },
             },
+            {
+              '@type': 'Question',
+              name: 'Can beginners join Fitplay Gym Kaithal?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Yes — Fitplay has a Beginner Foundations program with simple plans and zero guesswork, so you can start from scratch no matter how new you are to the gym floor.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'What equipment is available at the gym in Kaithal?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'The Fitplay Gym Kaithal floor has free weights, racks, cables and everything you need for strength training, muscle building and functional fitness.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'How much does a personal trainer cost in Kaithal?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Personal training pricing depends on your package. Get full details and a free recommendation by calling or WhatsApp on +91 870551762.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'How can I join Fitplay Gym Kaithal?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Walk in near City Centre, Kaithal for a free look, or call +91 870551762 to start your membership — monthly, quarterly or annual plans available.',
+              },
+            },
           ],
+        },
+        {
+          '@type': 'VideoObject',
+          '@id': `${SITE_URL}/#herovideo`,
+          name: 'Fitplay Gym Kaithal — Inside the Floor',
+          description: 'See inside Fitplay Gym Kaithal, the best gym in Kaithal, Haryana — strength training, equipment and the training community.',
+          thumbnailUrl: `${SITE_URL}/images/girl.png`,
+          uploadDate: '2026-09-17',
+          duration: 'PT1M38S',
+          contentUrl: `${SITE_URL}/assets/hero-video.mp4`,
+          embedUrl: `${SITE_URL}/`,
+          publisher: { '@id': `${SITE_URL}/#gym` },
         },
       ],
     };
@@ -233,15 +277,15 @@ const trainingOffers = [
 ];
 
 const galleryImages = [
-  { src: `${base}images/gallery-01.jpg`, label: 'Fitplay life', ratio: '335 / 597' },
-  { src: `${base}images/gallery-02.jpg`, label: 'Train hard', ratio: '335 / 597' },
-  { src: `${base}images/gallery-03.jpg`, label: 'Power up', ratio: '335 / 597' },
-  { src: `${base}images/gallery-04.jpg`, label: 'Strong daily', ratio: '335 / 597' },
-  { src: `${base}images/gym-02.jpg`, label: 'The floor', ratio: '515 / 388' },
-  { src: `${base}images/gym-03.jpg`, label: 'Strength zone', ratio: '515 / 388' },
-  { src: `${base}images/gym-05.jpg`, label: 'Every rep counts', ratio: '1 / 1' },
-  { src: `${base}images/gym-07.jpg`, label: 'Fitplay energy', ratio: '515 / 388' },
-  { src: `${base}images/gym-09.jpg`, label: 'The crew', ratio: '1 / 1' },
+  { src: `${base}images/gallery-01.jpg`, label: 'Fitplay life', alt: 'Fitplay Gym Kaithal — gym floor during training', ratio: '335 / 597' },
+  { src: `${base}images/gallery-02.jpg`, label: 'Train hard', alt: 'Muscle building equipment at Fitplay Gym Kaithal', ratio: '335 / 597' },
+  { src: `${base}images/gallery-03.jpg`, label: 'Power up', alt: 'Strength training in progress at Fitplay Gym Kaithal', ratio: '335 / 597' },
+  { src: `${base}images/gallery-04.jpg`, label: 'Strong daily', alt: 'Daily workout reps at the best gym in Kaithal', ratio: '335 / 597' },
+  { src: `${base}images/gym-02.jpg`, label: 'The floor', alt: 'Training floor of Fitplay Gym near City Centre Kaithal', ratio: '515 / 388' },
+  { src: `${base}images/gym-03.jpg`, label: 'Strength zone', alt: 'Strength zone and weights at Fitplay Gym Kaithal Haryana', ratio: '515 / 388' },
+  { src: `${base}images/gym-05.jpg`, label: 'Every rep counts', alt: 'Every rep counts at Fitplay Gym in Kaithal', ratio: '1 / 1' },
+  { src: `${base}images/gym-07.jpg`, label: 'Fitplay energy', alt: 'Fitplay energy on the gym floor in Kaithal', ratio: '515 / 388' },
+  { src: `${base}images/gym-09.jpg`, label: 'The crew', alt: 'The Fitplay Gym Kaithal training community', ratio: '1 / 1' },
 ];
 
 const faqs = [
@@ -264,6 +308,22 @@ const faqs = [
   {
     q: 'Where is Fitplay Gym located in Kaithal?',
     a: 'Fitplay Gym is located near City Centre, Kaithal, Haryana. You can open the location in Google Maps from the contact page.',
+  },
+  {
+    q: 'Can beginners join Fitplay Gym Kaithal?',
+    a: 'Yes — Fitplay has a Beginner Foundations program with simple plans and zero guesswork, so you can start from scratch no matter how new you are to the gym floor.',
+  },
+  {
+    q: 'What equipment is available at the gym in Kaithal?',
+    a: 'The Fitplay Gym Kaithal floor has free weights, racks, cables and everything you need for strength training, muscle building and functional fitness.',
+  },
+  {
+    q: 'How much does a personal trainer cost in Kaithal?',
+    a: 'Personal training pricing depends on your package. Get full details and a free recommendation by calling or WhatsApp on +91 870551762.',
+  },
+  {
+    q: 'How can I join Fitplay Gym Kaithal?',
+    a: 'Walk in near City Centre, Kaithal for a free look, or call +91 870551762 to start your membership — monthly, quarterly or annual plans available.',
   },
 ];
 
@@ -517,9 +577,9 @@ function Home() {
         <section className={`hero grain ${heroPhase === 'photo' ? 'hero-showing-photo' : ''}`} aria-labelledby="hero-title">
           <audio ref={heroAudioRef} src={`${base}assets/hero-audio.mp3`} loop preload="auto" aria-hidden="true" />
           {heroPhase === 'video' && (
-          <video ref={heroVideoRef} className="hero-video" autoPlay muted loop={false} playsInline aria-hidden="true" onEnded={() => setHeroPhase('photo')}><source src={`${base}assets/hero-video.mp4`} type="video/mp4" /></video>
+          <video ref={heroVideoRef} className="hero-video" autoPlay muted loop={false} playsInline preload="metadata" poster={`${base}images/girl.png`} aria-hidden="true" onEnded={() => setHeroPhase('photo')}><source src={`${base}assets/hero-video.mp4`} type="video/mp4" /></video>
           )}
-          {heroPhase === 'photo' && <img className="hero-photo" src={`${base}images/girl.png`} alt="Fitplay Gym" aria-hidden="true" />}
+          {heroPhase === 'photo' && <img className="hero-photo" src={`${base}images/girl.png`} alt="Fitplay Gym Kaithal — training floor" aria-hidden="true" fetchPriority="high" />}
           <button className="hero-sound" onClick={toggleHeroSound} aria-label={heroSound ? 'Mute song' : 'Play song'} data-testid="button-hero-sound">{heroSound ? <VolumeX size={18} /> : <Volume2 size={18} />}<span>Song {heroSound ? 'on' : 'off'}</span></button>
           <div className="container-wide hero-content">
             <p className="eyebrow reveal" style={{ color: 'var(--acid)' }}>Kaithal's training ground / Est. 2017</p>
@@ -560,7 +620,7 @@ function Home() {
             <div className="home-gallery-strip mt-14 reveal delay-2">
               {galleryImages.slice(0, 4).map((img) => (
                 <Link key={img.src} href="/gallery" className="home-gallery-thumb" style={{ aspectRatio: img.ratio }}>
-                  <img src={img.src} alt={img.label} loading="lazy" />
+<img src={img.src} alt={img.alt} loading="lazy" />
                 </Link>
               ))}
             </div>
@@ -706,14 +766,14 @@ function GalleryPage() {
         <PageHero eyebrow="05 / Gallery" title="Inside" accent="the gym." copy="Real frames from the Fitplay floor — the equipment, the energy and the people who make it home." />
         <section className="section"><div className="container-wide"><div className="gallery-grid">{galleryImages.map((img, index) => (
           <button key={img.src} className={`gallery-item reveal delay-${(index % 3) + 1}`} style={{ aspectRatio: img.ratio }} onClick={() => setActive(index)} aria-label={`Open photo: ${img.label}`}>
-            <img src={img.src} alt={img.label} loading="lazy" />
+            <img src={img.src} alt={img.alt} loading="lazy" />
             <span className="gallery-caption">{img.label}</span>
           </button>
         ))}</div></div></section>
         {active !== null && (
           <div className="gallery-lightbox" role="dialog" aria-modal="true" onClick={() => setActive(null)}>
             <button className="gallery-lightbox-close" onClick={() => setActive(null)} aria-label="Close photo"><X size={20} /></button>
-            <img src={galleryImages[active].src} alt={galleryImages[active].label} />
+            <img src={galleryImages[active].src} alt={galleryImages[active].alt} />
           </div>
         )}
       </main>
@@ -741,7 +801,7 @@ function ContactPage() {
     <SiteLayout>
       <main>
         <PageHero eyebrow="04 / Contact" title="Make the" accent="first move." copy="Come in for a look, ask us anything and get a feel for the floor. Your first step does not need to be perfect. It just needs to happen." bg="images/page.png" />
-        <section className="section"><div className="container-wide"><div className="contact-grid"><div className="reveal"><p className="eyebrow mb-5 text-[var(--ember)]">Find the floor</p><h2 className="display section-title">See you<br /><span className="text-[var(--ember)]">at Fitplay.</span></h2><p className="body-copy mt-8">Near City Centre,<br />Kaithal, Haryana</p><a href="https://maps.google.com/?q=Fitplay+Gym+Kaithal" target="_blank" rel="noreferrer" className="button-dark mt-8">Open in Maps <MapPin size={16} /></a></div><div className="contact-details reveal delay-1"><div><p className="footer-label text-[var(--ember)]">Call</p><a className="contact-link" href="tel:+91870551762">+91 870551762</a></div><div><p className="footer-label text-[var(--ember)]">Hours</p><p className="contact-copy">Monday — Saturday<br />6:00 AM — 10:00 PM<br /><br />Sunday<br />7:00 AM — 1:00 PM</p></div><div><p className="footer-label text-[var(--ember)]">Social</p><a className="contact-link" href="https://www.instagram.com/fitplaykaithal" target="_blank" rel="noreferrer">@fitplaykaithal <Instagram size={18} /></a></div></div></div>
+        <section className="section"><div className="container-wide"><div className="contact-grid"><div className="reveal"><p className="eyebrow mb-5 text-[var(--ember)]">Find the floor</p><h2 className="display section-title">See you<br /><span className="text-[var(--ember)]">at Fitplay.</span></h2><p className="body-copy mt-8">Near City Centre,<br />Kaithal, Haryana</p><p className="mt-3 max-w-[260px] text-sm leading-6 text-[rgba(245,241,232,.55)]">Serving Kaithal and nearby Haryana — Karnal, Kurukshetra and Jind.</p><a href="https://maps.google.com/?q=Fitplay+Gym+Kaithal" target="_blank" rel="noreferrer" className="button-dark mt-8">Open in Maps <MapPin size={16} /></a></div><div className="contact-details reveal delay-1"><div><p className="footer-label text-[var(--ember)]">Call</p><a className="contact-link" href="tel:+91870551762">+91 870551762</a></div><div><p className="footer-label text-[var(--ember)]">Hours</p><p className="contact-copy">Monday — Saturday<br />6:00 AM — 10:00 PM<br /><br />Sunday<br />7:00 AM — 1:00 PM</p></div><div><p className="footer-label text-[var(--ember)]">Social</p><a className="contact-link" href="https://www.instagram.com/fitplaykaithal" target="_blank" rel="noreferrer">@fitplaykaithal <Instagram size={18} /></a></div></div></div>
         <a href="https://maps.google.com/?q=Fitplay+Gym+Kaithal" target="_blank" rel="noreferrer" className="contact-map reveal delay-1"><img src={`${base}images/map.png`} alt="Map to Fitplay Gym Kaithal" /></a></div></section>
         <section className="dark-panel section"><div className="container-wide"><div className="intro-grid"><div className="reveal"><p className="eyebrow mb-5 text-[var(--acid)]">Got a question?</p><h2 className="display section-title">Send an<br /><span className="text-[var(--acid)]">inquiry.</span></h2><p className="mt-5 max-w-[400px] text-sm leading-7 text-[rgba(245,241,232,.6)]">Got a query about the gym, membership or training? Drop your details below and we'll get back to you at your email.</p></div>
           <form className="inquiry-form reveal delay-1" onSubmit={handleInquiry}>
