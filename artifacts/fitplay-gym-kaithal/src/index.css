@@ -248,6 +248,25 @@
 .fitplay-page .quote-mark { font-family: 'Barlow Condensed'; font-size: 7rem; line-height: .6; color: var(--ember); }
 .fitplay-page .quote-text { font-family: 'Barlow Condensed'; text-transform: uppercase; font-weight: 600; font-size: clamp(2.2rem, 5vw, 5rem); line-height: .9; max-width: 850px; }
 .fitplay-page .quote-by { margin-top: 28px; font-size: .73rem; letter-spacing: .14em; text-transform: uppercase; opacity: .62; }
+.fitplay-page .reviews-carousel { border-top: 1px solid var(--line); padding-top: 40px; }
+.fitplay-page .review-slide { animation: review-in .6s cubic-bezier(.22,1,.36,1) both; max-width: 900px; }
+@keyframes review-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+.fitplay-page .review-stars { display: flex; gap: 5px; margin-bottom: 18px; }
+.fitplay-page .review-star { color: rgba(245,241,232,.25); }
+.fitplay-page .review-star-on { color: var(--acid); }
+.fitplay-page .review-text { font-family: 'Barlow Condensed'; text-transform: uppercase; font-weight: 600; font-size: clamp(1.8rem, 4vw, 3.4rem); line-height: 1.02; max-width: 860px; }
+.fitplay-page .review-by { margin-top: 22px; font-size: .73rem; letter-spacing: .14em; text-transform: uppercase; opacity: .62; }
+.fitplay-page .review-by .review-role { opacity: .5; margin-left: 8px; }
+.fitplay-page .review-controls { margin-top: 34px; display: flex; align-items: center; gap: 18px; }
+.fitplay-page .review-nav { width: 42px; height: 42px; display: grid; place-items: center; border: 1px solid rgba(245,241,232,.3); background: transparent; color: inherit; cursor: pointer; transition: background .2s, color .2s; }
+.fitplay-page .review-nav:hover { background: var(--acid); color: white; }
+.fitplay-page .review-dots { display: flex; gap: 8px; flex-wrap: wrap; }
+.fitplay-page .review-dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid rgba(245,241,232,.4); background: transparent; padding: 0; cursor: pointer; transition: background .2s, transform .2s; }
+.fitplay-page .review-dot-active { background: var(--acid); border-color: var(--acid); transform: scale(1.25); }
+@media (max-width: 820px) {
+  .fitplay-page .review-text { font-size: clamp(1.45rem, 7vw, 2.3rem); }
+  .fitplay-page .review-controls { flex-wrap: wrap; gap: 14px; }
+}
 .fitplay-page .cta-panel { position: relative; padding: 100px 0 110px; overflow: hidden; }
 .fitplay-page .cta-panel::before { content: ''; position: absolute; width: 600px; height: 600px; right: -200px; top: -220px; border: 1px solid rgba(17,24,39,.3); border-radius: 50%; box-shadow: 0 0 0 35px rgba(17,24,39,.06), 0 0 0 70px rgba(17,24,39,.045); }
 .fitplay-page .cta-title { font-size: clamp(4.8rem, 12vw, 12rem); line-height: .76; max-width: 870px; position: relative; z-index: 1; }

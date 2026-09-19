@@ -2,6 +2,7 @@ import { type ReactNode, useEffect, useRef, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
   ArrowDownRight,
+  ArrowLeft,
   ArrowRight,
   Check,
   Clock3,
@@ -10,6 +11,7 @@ import {
   Menu,
   Phone,
   Play,
+  Star,
   Volume2,
   VolumeX,
   X,
@@ -649,6 +651,16 @@ function Home() {
           </div>
         </section>
 
+        <section className="section dark-panel" aria-labelledby="home-reviews-title">
+          <div className="container-wide">
+            <div className="flex flex-wrap items-end justify-between gap-8">
+              <div className="reveal"><p className="eyebrow mb-5 text-[var(--acid)]">05 / Real reviews</p><h2 id="home-reviews-title" className="display section-title">What Kaithal<br /><span className="text-[var(--acid)]">says about us.</span></h2></div>
+              <p className="body-copy body-copy-dark reveal delay-1">4.5 / 5 stars from 254+ reviews on JustDial — one at a time.</p>
+            </div>
+            <div className="mt-12 reveal delay-2"><ReviewsCarousel /></div>
+          </div>
+        </section>
+
         <section className="section dark-panel" aria-labelledby="home-faq-title">
           <div className="container-wide">
             <div className="intro-grid">
@@ -684,6 +696,49 @@ function FaqList() {
           <p className="faq-a">{f.a}</p>
         </details>
       ))}
+    </div>
+  );
+}
+
+const justdialReviews = [
+  { name: 'Narender Goyat', role: 'Local guide', tag: 'JustDial', stars: 5, text: 'Great ambience, supportive and professional trainers, breathtaking CrossFit sessions, energetic Zumba classes and well-maintained machines. The fee is also reasonable — undoubtedly the best gym in Kaithal. I wouldn\'t hesitate to recommend it to anyone who wants to achieve their fitness goals.' },
+  { name: 'Arnav Doc', role: 'Local guide', tag: 'JustDial', stars: 5, text: 'Something which gives you a reason to stay in Kaithal! A class-apart gym, totally worth spending on — and they keep raising their standards since it opened. Certified trainers, next-level motivation, and a CrossFit section that\'s the only one in Kaithal. Separate cardio section, CrossFit arena and weight training section.' },
+  { name: 'Pranav Bansal', role: 'Local guide', tag: 'JustDial', stars: 5, text: 'It is the best gym in Kaithal. All trainers are very good, and it\'s fully equipped with all types of machines — I have never seen any machine in bad condition. The price is also very reasonable.' },
+  { name: 'Yogesh', role: 'Member', tag: 'JustDial', stars: 5, text: 'It is the best gym of Kaithal. This gym plays an important role in my life and makes me happier. Trainers like Sagar bhaiya and Radhe bhaiya have a very calm nature and talk with us like our big brother, and the owner Amit sir is always in a good mood with a smiling face.' },
+  { name: 'Prakul Sharma', role: 'Member', tag: 'JustDial', stars: 5, text: 'Best gym in the town. The gym owner and other trainers are really cooperative. If you\'re thinking about transformation, then must go ahead — Fitplay is for you.' },
+  { name: 'Rs Raika', role: 'Coach', tag: 'JustDial', stars: 5, text: 'My self coach here. One of the best gyms in Kaithal — like Chandigarh and Delhi. Meet our Amit sir for more information.' },
+  { name: 'Yogesh Singh', role: 'Local guide', tag: 'JustDial', stars: 5, text: 'Best you can get in the city.' },
+  { name: 'Parveen Malik', role: 'Member', tag: 'JustDial', stars: 4, text: 'Nice place for fitness lovers.' },
+] as const;
+
+function ReviewsCarousel() {
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  useEffect(() => {
+    if (paused) return;
+    const timer = window.setInterval(() => setIndex((i) => (i + 1) % justdialReviews.length), 4800);
+    return () => window.clearInterval(timer);
+  }, [paused]);
+  const current = justdialReviews[index];
+  const go = (dir: number) => setIndex((i) => (i + dir + justdialReviews.length) % justdialReviews.length);
+  return (
+    <div className="reviews-carousel" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+      <div className="review-slide" key={index}>
+        <div className="review-stars" aria-label={`${current.stars} out of 5 stars`}>
+          {Array.from({ length: 5 }, (_, s) => <Star key={s} size={16} className={`review-star ${s < current.stars ? 'review-star-on' : ''}`} fill={s < current.stars ? 'currentColor' : 'none'} />)}
+        </div>
+        <p className="review-text">“{current.text}”</p>
+        <p className="review-by">— {current.name} <span className="review-role">{current.role}</span></p>
+      </div>
+      <div className="review-controls">
+        <button className="review-nav" onClick={() => go(-1)} aria-label="Previous review" data-testid="review-prev"><ArrowLeft size={18} /></button>
+        <div className="review-dots" role="tablist" aria-label="Reviews">
+          {justdialReviews.map((r, i) => (
+            <button key={r.name} className={`review-dot ${i === index ? 'review-dot-active' : ''}`} onClick={() => setIndex(i)} aria-label={`Go to review by ${r.name}`} data-testid={`review-dot-${i}`} />
+          ))}
+        </div>
+        <button className="review-nav" onClick={() => go(1)} aria-label="Next review" data-testid="review-next"><ArrowRight size={18} /></button>
+      </div>
     </div>
   );
 }
