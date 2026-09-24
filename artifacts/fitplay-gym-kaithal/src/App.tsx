@@ -18,6 +18,7 @@ import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { ChatBot } from '@/components/chatbot';
+import { TourBot } from '@/components/tour-bot';
 import NotFound from '@/pages/not-found';
 import { Link, Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
 
@@ -453,6 +454,7 @@ function SiteLayout({ children }: { children: ReactNode }) {
       <Footer />
       <BookingModal open={modalOpen} onClose={() => setModalOpen(false)} />
       <ChatBot />
+      <TourBot />
     </div>
   );
 }
