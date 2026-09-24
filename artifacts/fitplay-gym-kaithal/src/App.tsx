@@ -12,8 +12,6 @@ import {
   Phone,
   Play,
   Star,
-  Volume2,
-  VolumeX,
   X,
 } from 'lucide-react';
 import { ErrorBoundary } from '@/components/error-boundary';
@@ -502,10 +500,8 @@ function IntroOverlay({ onFinish, base }: { onFinish: () => void; base: string }
 function Home() {
   useReveal();
   const [introVisible, setIntroVisible] = useState(true);
-  const [heroSound, setHeroSound] = useState(false);
   const [heroPhase, setHeroPhase] = useState<'video' | 'photo'>('video');
   const heroVideoRef = useRef<HTMLVideoElement>(null);
-  const heroAudioRef = useRef<HTMLAudioElement>(null);
   const photoTimerRef = useRef<number | null>(null);
   const finishIntro = () => {
     window.sessionStorage.setItem('fitplay-intro-seen', 'true');
@@ -521,32 +517,6 @@ function Home() {
     const timer = window.setTimeout(finishIntro, 10500);
     return () => window.clearTimeout(timer);
   }, [introVisible]);
-
-  useEffect(() => {
-    const enableSound = () => {
-      const audio = heroAudioRef.current;
-      if (audio) {
-        audio.volume = 0.9;
-        audio.play().catch(() => {});
-        setHeroSound(true);
-      }
-    };
-    const handler = (e: Event) => {
-      if ((e.target as HTMLElement)?.closest('.hero-sound')) return;
-      enableSound();
-      window.removeEventListener('click', handler);
-      window.removeEventListener('touchstart', handler);
-      window.removeEventListener('keydown', handler);
-    };
-    window.addEventListener('click', handler);
-    window.addEventListener('touchstart', handler);
-    window.addEventListener('keydown', handler);
-    return () => {
-      window.removeEventListener('click', handler);
-      window.removeEventListener('touchstart', handler);
-      window.removeEventListener('keydown', handler);
-    };
-  }, []);
 
   useEffect(() => {
     if (heroPhase === 'photo') {
@@ -568,28 +538,13 @@ function Home() {
     }
   }, [heroPhase]);
 
-  const toggleHeroSound = () => {
-    const audio = heroAudioRef.current;
-    if (!audio) return;
-    if (heroSound) {
-      audio.pause();
-      setHeroSound(false);
-    } else {
-      audio.volume = 0.9;
-      audio.play().catch(() => {});
-      setHeroSound(true);
-    }
-  };
-
   return (
     <SiteLayout>
       {introVisible && <IntroOverlay onFinish={finishIntro} base={base} />}
       <main id="top">
         <section className={`hero grain ${heroPhase === 'photo' ? 'hero-showing-photo' : ''}`} aria-labelledby="hero-title">
-          <audio ref={heroAudioRef} src={`${base}assets/hero-audio.mp3`} loop preload="auto" aria-hidden="true" />
           <video ref={heroVideoRef} className="hero-video" autoPlay muted loop={false} playsInline preload="metadata" poster={`${base}images/girl.png`} aria-hidden="true" onEnded={() => setHeroPhase('photo')}><source src={`${base}assets/hero-video.mp4`} type="video/mp4" /></video>
           <img className={`hero-photo ${heroPhase === 'photo' ? 'is-visible' : ''}`} src={`${base}images/girl.png`} alt="Fitplay Gym Kaithal — training floor" aria-hidden="true" fetchPriority="high" />
-          <button className="hero-sound" onClick={toggleHeroSound} aria-label={heroSound ? 'Mute song' : 'Play song'} data-testid="button-hero-sound">{heroSound ? <VolumeX size={18} /> : <Volume2 size={18} />}<span>Song {heroSound ? 'on' : 'off'}</span></button>
           <div className="container-wide hero-content">
             <p className="eyebrow reveal" style={{ color: 'var(--acid)' }}>Kaithal's training ground / Est. 2017</p>
             <h1 id="hero-title" className="display hero-title reveal delay-1">Show up.<br /><em>Get stronger.</em></h1>

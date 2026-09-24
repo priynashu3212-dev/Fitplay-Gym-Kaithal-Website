@@ -165,8 +165,6 @@
 .fitplay-page .hero-photo.is-visible { opacity: 1; }
 .fitplay-page .hero-showing-photo::before { opacity: .15; }
 .fitplay-page .hero::after { content: ''; position: absolute; width: 45vw; height: 45vw; max-width: 670px; max-height: 670px; right: -8vw; top: 120px; border: 1px solid rgba(230,57,70,.28); border-radius: 50%; box-shadow: 0 0 0 22px rgba(230,57,70,.05), 0 0 0 44px rgba(230,57,70,.035); }
-.fitplay-page .hero-sound { position: absolute; z-index: 2; right: 24px; bottom: 28px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; background: rgba(17,24,39,.72); color: var(--acid); border: 1px solid rgba(230,57,70,.4); cursor: pointer; font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; transition: background .2s ease, color .2s ease; }
-.fitplay-page .hero-sound:hover { background: var(--acid); color: white; }
 .fitplay-page .hero-content { position: relative; z-index: 1; }
 .fitplay-page .hero-title { font-size: clamp(5.6rem, 16vw, 13.5rem); line-height: .79; max-width: 860px; margin: 24px 0 34px; }
 .fitplay-page .hero-title em { font-style: normal; color: var(--acid); display: block; margin-left: clamp(30px, 10vw, 140px); }
