@@ -407,7 +407,7 @@ function Footer() {
             <a href="https://www.instagram.com/fitplaykaithal" target="_blank" rel="noreferrer" className="mt-5 flex items-center gap-2" data-testid="link-footer-instagram"><Instagram size={15} className="text-[var(--acid)]" /> @fitplaykaithal</a>
           </div>
         </div>
-        <div className="footer-bottom"><span>© 2026 Fitplay Gym Kaithal</span><span className="flex items-center gap-2"><Clock3 size={13} /> Train with intent.</span></div>
+        <div className="footer-bottom"><span>© 2026 Fitplay Gym Kaithal</span><span className="flex items-center gap-2"><Clock3 size={13} /> Train with intent.</span><span>Website by <a href="https://video-portfolio-eta-two.vercel.app/" target="_blank" rel="noreferrer" data-testid="link-footer-credit">Priyanshu Rana</a></span></div>
       </div>
     </footer>
   );
